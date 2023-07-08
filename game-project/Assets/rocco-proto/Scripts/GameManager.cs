@@ -6,9 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public Mole[] characters = new Mole[4];
+    public Mole[] characters = new Mole[3];
 
-    public Mole[] activeCharacters = new Mole[4];
+    public Mole[] activeCharacters = new Mole[3];
 
     public Map map;
 

@@ -584,12 +584,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characters:
-  - {fileID: 5694415981110098319, guid: 27e167d7571c24cdcbc191535534c8e3, type: 3}
   - {fileID: 5694415981110098319, guid: fc32c7754fee44291b1f785361013f48, type: 3}
-  - {fileID: 5694415981110098319, guid: 61cf8c0a2b8544b6792d984461ee8b75, type: 3}
-  - {fileID: 5694415981110098319, guid: f355b6b2e07ec47b08fd4b134904306d, type: 3}
+  - {fileID: 5694415981110098319, guid: 18f202c319ef34babb8780e263720308, type: 3}
+  - {fileID: 5694415981110098319, guid: d29c82fabfa83420489f961d67e6d1c8, type: 3}
   activeCharacters:
-  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
