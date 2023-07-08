@@ -1,7 +1,7 @@
 // Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2018/07/13
 
-#if false // MODULE_MARKER
+#if true // MODULE_MARKER
 using System;
 using DG.Tweening.Core;
 using DG.Tweening.Core.Enums;
@@ -13,11 +13,11 @@ using UnityEngine;
 #pragma warning disable 1591
 namespace DG.Tweening
 {
-	public static class DOTweenModulePhysics
+    public static class DOTweenModulePhysics
     {
-#region Shortcuts
+        #region Shortcuts
 
-#region Rigidbody
+        #region Rigidbody
 
         /// <summary>Tweens a Rigidbody's position to the given value.
         /// Also stores the rigidbody as the tween's target so it can be used for filtered operations</summary>
@@ -89,7 +89,7 @@ namespace DG.Tweening
             return t;
         }
 
-#region Special
+        #region Special
 
         /// <summary>Tweens a Rigidbody's position to the given value, while also applying a jump effect along the Y axis.
         /// Returns a Sequence instead of a Tweener.
@@ -116,8 +116,10 @@ namespace DG.Tweening
                     .SetOptions(AxisConstraint.Z, snapping).SetEase(Ease.Linear)
                 ).Join(yTween)
                 .SetTarget(target).SetEase(DOTween.defaultEaseType);
-            yTween.OnUpdate(() => {
-                if (!offsetYSet) {
+            yTween.OnUpdate(() =>
+            {
+                if (!offsetYSet)
+                {
                     offsetYSet = true;
                     offsetY = s.isRelative ? endValue.y : endValue.y - startPosY;
                 }
@@ -206,11 +208,11 @@ namespace DG.Tweening
             return t;
         }
 
-#endregion
+        #endregion
 
-#endregion
+        #endregion
 
-#endregion
-	}
+        #endregion
+    }
 }
 #endif
