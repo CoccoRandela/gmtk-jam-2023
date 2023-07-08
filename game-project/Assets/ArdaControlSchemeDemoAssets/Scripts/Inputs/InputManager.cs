@@ -32,6 +32,12 @@ public class InputManager : MonoBehaviour
 
     public void Update()
     {
+        if (Input.GetKey(KeyCode.Space))
+        {
+            ClearLists();
+            return;
+        }
+        
         List<KeyCode> pressedInput = new List<KeyCode>();
 
         if (Input.anyKeyDown || Input.anyKey)

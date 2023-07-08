@@ -7,6 +7,8 @@ public class MoleController : MonoBehaviour
 {
     //Movement, Stun, Revive, Position
 
+    public Hole currentHole;
+    
     public Vector2 molePosition;
 
     private void Start()
@@ -14,12 +16,19 @@ public class MoleController : MonoBehaviour
         //MoveTo(GameManager.Instance.holes[1]);
     }
 
-    public void MoveTo(Hole hole)
+    public void MoveTo(Hole holeToMoveTo)
     {
-        StartCoroutine(GoDown(hole.transform.position));
-        
-        hole.occupyingMole = this;
-        
+        if (holeToMoveTo.occupationState == Hole.Occupation.Full)
+        {
+            Debug.Log("the " + holeToMoveTo + " is full");
+            return;
+        }
+        currentHole.occupationState = Hole.Occupation.Free;
+        StartCoroutine(GoDown(holeToMoveTo.transform.position));
+        holeToMoveTo.occupyingMole = this;
+        holeToMoveTo.occupationState = Hole.Occupation.Full;
+        currentHole = holeToMoveTo;
+
     }
     
 
@@ -30,7 +39,6 @@ public class MoleController : MonoBehaviour
         {
             if (Vector2.Distance(startPos, transform.position) > .5)
             {
-                Debug.Log(startPos + " " + transform.position);
                 break;
             }
 

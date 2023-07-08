@@ -41,14 +41,21 @@ public class GameManager : MonoBehaviour
             Debug.Log(pair.Key + "--" + pair.Value);
         }
         
+        //instantiate 1 mole and set the hole and mole parameters
         molesInGame[0] = Instantiate(molePrefabs[0], holes[0].transform.position, Quaternion.identity);
         holes[0].occupyingMole = molesInGame[0];
+        molesInGame[0].currentHole = holes[0];
+        holes[0].occupationState = Hole.Occupation.Full;
         
-        //molesInGame[1] = Instantiate(molePrefabs[0], holes[1].transform.position, Quaternion.identity);
-        //holes[1].occupyingMole = molesInGame[1];
+        molesInGame[1] = Instantiate(molePrefabs[0], holes[1].transform.position, Quaternion.identity);
+        holes[1].occupyingMole = molesInGame[1];
+        molesInGame[1].currentHole = holes[1];
+        holes[1].occupationState = Hole.Occupation.Full;
     }
 
-    
+    public List<KeyCode> FromKeys = new List<KeyCode>(); //Keys of holes to move from
+    public List<KeyCode> ToKeys = new List<KeyCode>(); //Keys of holes to move to
+
     public void OnKeyUpEvent(KeyCode keyCode)
     {
         
@@ -72,4 +79,5 @@ public class GameManager : MonoBehaviour
         
         InputManager.Instance.ClearLists();
     }
+    
 }
