@@ -26,7 +26,8 @@ public class MoleController : MonoBehaviour
             return;
         }
         
-        if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable)
+        if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable
+            )
         {
             Debug.Log("the " + holeToMoveTo + " is full");
             return;
@@ -51,7 +52,7 @@ public class MoleController : MonoBehaviour
                 break;
             }
 
-            transform.position -= new Vector3(0,.5f,0);
+            transform.position -= new Vector3(0,5f * Time.deltaTime,0);
             yield return null;
         }
 
@@ -69,7 +70,7 @@ public class MoleController : MonoBehaviour
                 break;
             }
 
-            transform.position += new Vector3(0,.5f ,0);
+            transform.position += new Vector3(0,5f * Time.deltaTime,0);
             yield return null;
         }
 
