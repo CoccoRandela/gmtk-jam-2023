@@ -8,8 +8,6 @@ public class MoleController : MonoBehaviour
     //Movement, Stun, Revive, Position
 
     public Hole currentHole;
-    
-    public Vector2 molePosition;
 
     public bool isDead;
 
@@ -83,5 +81,6 @@ public class MoleController : MonoBehaviour
         currentHole.occupationState = Hole.Occupation.Unusable;
         isDead = true;
         GetComponent<SpriteRenderer>().color = Color.black;
+        GameManager.Instance.molesInGame.Remove(this);
     }
 }

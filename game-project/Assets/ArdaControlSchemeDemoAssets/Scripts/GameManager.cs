@@ -14,9 +14,9 @@ public class GameManager : MonoBehaviour
     private Dictionary<KeyCode,Hole> holeCodes = new Dictionary< KeyCode,Hole>();
     private Dictionary<Vector2,Hole> holePoss = new Dictionary< Vector2,Hole>();
 
-    public MoleController[] molePrefabs = new MoleController[4];
+    public List<MoleController> molePrefabs = new List<MoleController>();
 
-    public MoleController[] molesInGame = new MoleController[4];
+    public List<MoleController> molesInGame = new List<MoleController>();
 
     private void Awake()
     {
@@ -84,5 +84,21 @@ public class GameManager : MonoBehaviour
     public Hole GetHoleFromHolePos(Vector2 holePos)
     {
         return holePoss[holePos];
+    }
+
+    public void MoveMoles(Vector2 dir)
+    {
+        foreach (var mole in molesInGame)
+        {
+            var newPos = mole.currentHole.holePosition + dir;
+            if (holePoss.ContainsKey(newPos))
+            {
+                if (holePoss[newPos].occupationState != Hole.Occupation.Full || holePoss[newPos].occupationState != Hole.Occupation.Unusable)
+                {
+                    mole.MoveTo(holePoss[newPos]);
+                }
+            }
+            
+        }
     }
 }
