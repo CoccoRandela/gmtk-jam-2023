@@ -52,31 +52,34 @@ public class GameManager : MonoBehaviour
         molesInGame[1].currentHole = holes[1];
         holes[1].occupationState = Hole.Occupation.Full;
     }
-
-    public List<KeyCode> FromKeys = new List<KeyCode>(); //Keys of holes to move from
-    public List<KeyCode> ToKeys = new List<KeyCode>(); //Keys of holes to move to
+    
 
     public void OnKeyUpEvent(KeyCode keyCode)
     {
-        
+        if (holeCodes[keyCode].occupationState != Hole.Occupation.Full)
+        {
+            InputManager.Instance.keyUps.Remove(keyCode);
+            return;
+        }
+        holeCodes[keyCode].GetComponent<SpriteRenderer>().color = Color.black;
         
     }
 
-    private bool first = true;
     public void OnKeyDownEvent(KeyCode keyCode)
     {
-        if (first)
+        
+        for (int i = 0; i < InputManager.Instance.keyUps.Count; i++)
         {
-            first = false;
-            return;
-        }
-        KeyCode holeToMoveFrom = InputManager.Instance.keyUps[0];
-        KeyCode holeToMoveTo = InputManager.Instance.keyDowns[0];
-        
-        Debug.Log("move from " + holeToMoveFrom + " to " + holeToMoveTo);
+            KeyCode holeToMoveFrom = InputManager.Instance.keyUps[i];
+            KeyCode holeToMoveTo = InputManager.Instance.keyDowns[i];
+            holeCodes[holeToMoveFrom].occupyingMole.MoveTo(holeCodes[holeToMoveTo]);
 
-        holeCodes[holeToMoveFrom].occupyingMole.MoveTo(holeCodes[holeToMoveTo]);
-        
+            holeCodes[holeToMoveFrom].GetComponent<SpriteRenderer>().color = Color.gray;
+            holeCodes[holeToMoveTo].GetComponent<SpriteRenderer>().color = Color.black;
+
+        }
+
+        Debug.Log("cleared lists");
         InputManager.Instance.ClearLists();
     }
 

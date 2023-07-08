@@ -15,7 +15,7 @@ public class InputManager : MonoBehaviour
     public UnityEvent<KeyCode> keyUpEvent;
     public UnityEvent<KeyCode> keyDownEvent;
 
-        private void Awake()
+    private void Awake()
     {
         if (Instance == null)
         {

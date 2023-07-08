@@ -48,6 +48,7 @@ MonoBehaviour:
   holePosition: {x: 0, y: 0}
   occupationState: 0
   keyCode: 0
+  occupyingMole: {fileID: 0}
 --- !u!212 &-2706934226048333842
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90,7 +91,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 3117700da371f4f3b932c026b648284d, type: 3}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
