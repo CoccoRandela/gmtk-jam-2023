@@ -46,10 +46,17 @@ public class InputManager : MonoBehaviour
             {
                 if (Input.GetKey(code))
                 {
-                    m_activeInputs.Remove( code ); 
-                    m_activeInputs.Add( code ); 
-                    pressedInput.Add( code );
-                    AddToKeyDowns(code);
+                    if (GameManager.Instance.usableKeys.Contains(code))
+                    {
+                        m_activeInputs.Remove( code ); 
+                        m_activeInputs.Add( code ); 
+                        pressedInput.Add( code );
+                        AddToKeyDowns(code);
+                    }
+                    else
+                    {
+                        Debug.Log(code + " is not a usable key.");
+                    }
                 }
             }
         }

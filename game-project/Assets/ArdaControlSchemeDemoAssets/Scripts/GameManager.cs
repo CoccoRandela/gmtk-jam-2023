@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public Hole[] holes;
+    public List<KeyCode> usableKeys = new List<KeyCode>();
     private Dictionary<KeyCode,Hole> holeCodes = new Dictionary< KeyCode,Hole>();
     private Dictionary<Vector2,Hole> holePoss = new Dictionary< Vector2,Hole>();
 
@@ -36,6 +37,7 @@ public class GameManager : MonoBehaviour
         {
             holeCodes.Add(hole.keyCode, hole);
             holePoss.Add(hole.holePosition, hole);
+            usableKeys.Add(hole.keyCode);
         }
         
         
