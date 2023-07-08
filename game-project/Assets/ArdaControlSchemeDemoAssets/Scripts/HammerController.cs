@@ -9,6 +9,8 @@ public class HammerController : MonoBehaviour
     private Vector3 _restingPos;
     public GameObject shadow;
 
+    public int difficulty; //determines how possible it is that the hammer will attack an occupied hole
+
     private void Awake()
     {
         _restingPos = transform.position;
@@ -35,7 +37,7 @@ public class HammerController : MonoBehaviour
     {
         shadow.transform.localPosition = Vector3.zero;
         shadow.transform.localScale = new Vector3(3, 3, 3);
-        List<Vector2> HoleList = new List<Vector2>();
+        List<Vector2> holeList = new List<Vector2>();
 
         foreach (var hole in GameManager.Instance.holes)
         {
@@ -43,16 +45,17 @@ public class HammerController : MonoBehaviour
             {
                 continue;
             }
-            HoleList.Add(hole.holePosition);
-            if (hole.occupationState == Hole.Occupation.Full)//if its full, add it 3 more times so there is more chance to hit that one
+            holeList.Add(hole.holePosition);
+            if (hole.occupationState == Hole.Occupation.Full)//if its full, add it "difficulty" more times so there is more chance to hit that one
             {
-                HoleList.Add(hole.holePosition);
-                HoleList.Add(hole.holePosition);
-                HoleList.Add(hole.holePosition);
+                for (int i = 0; i < difficulty; i++)
+                {
+                    holeList.Add(hole.holePosition);
+                }
             }
         }
 
-        var chosenHole = GameManager.Instance.GetHoleFromHolePos(HoleList[Random.Range(0, HoleList.Count)]);
+        var chosenHole = GameManager.Instance.GetHoleFromHolePos(holeList[Random.Range(0, holeList.Count)]);
         var shadowStartPos = shadow.transform.position;
         var shadowStartScale = shadow.transform.localScale;
 
