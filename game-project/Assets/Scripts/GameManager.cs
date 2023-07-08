@@ -28,16 +28,28 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
+
+        int indexOne = 0;
+        int indexTwo = 0;
         for (int i = 0; i < characters.Length; i++)
         {
-            activeCharacters[i] = Instantiate(characters[i], map.holes[i].transform.position, map.holes[i].transform.rotation);
-            map.holes[i].occupied = true;
+            activeCharacters[i] = Instantiate(characters[i], map.holes[indexOne, indexTwo].transform.position, map.holes[indexOne, indexTwo].transform.rotation);
+            activeCharacters[i].currentMatrixIndex = (indexOne, indexTwo);
+            Debug.Log(activeCharacters[i].selectionKeyCode + " " + activeCharacters[i].currentMatrixIndex);
+            map.holes[indexOne, indexTwo].occupied = true;
+            indexTwo++;
+            if (indexTwo == map.columns)
+            {
+                indexTwo = 0;
+                indexOne++;
+            }
         }
     }
 
     void Update()
     {
         CheckIfCharIsSelected();
+        CheckIfCharIsMoved();
 
     }
 
@@ -76,6 +88,7 @@ public class GameManager : MonoBehaviour
             if (character.selectionKeyCode == keypressed)
             {
                 selectedCharacter = character;
+                Debug.Log(selectedCharacter.selectionKeyCode);
             }
         }
     }

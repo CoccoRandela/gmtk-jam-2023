@@ -8,14 +8,25 @@ public class Map : MonoBehaviour
     public int columns = 3;
 
     public Hole holePrefab;
-    public Hole[] holes;
+    public Hole[,] holes;
     // Start is called before the first frame update
 
     void Awake()
     {
-        for (int i = 0; i < rows * columns; i++)
+        holes = new Hole[rows, columns];
+
+        float xPos = -3f;
+        float yPos = 3f;
+
+        for (int i = 0; i < rows; i++)
         {
-            holes[i] = Instantiate(holePrefab, this.gameObject.transform);
+            for (int y = 0; y < columns; y++)
+            {
+                holes[i, y] = Instantiate(holePrefab, new Vector2(xPos, yPos), this.gameObject.transform.rotation, this.gameObject.transform);
+                xPos += 3f;
+            }
+            xPos = -3f;
+            yPos -= 3f;
         }
     }
 }
