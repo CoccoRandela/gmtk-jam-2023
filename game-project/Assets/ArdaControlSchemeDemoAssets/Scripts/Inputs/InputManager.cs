@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -28,7 +29,7 @@ public class InputManager : MonoBehaviour
     }
 
 
-    private List<KeyCode> m_activeInputs = new List<KeyCode>();
+    public List<KeyCode> m_activeInputs = new List<KeyCode>();
 
     public void Update()
     {
@@ -40,22 +41,20 @@ public class InputManager : MonoBehaviour
         
         List<KeyCode> pressedInput = new List<KeyCode>();
 
-        if (Input.anyKeyDown || Input.anyKey)
+        if (Input.anyKey)
         {
-            foreach(KeyCode code in System.Enum.GetValues(typeof( KeyCode )) )
+            foreach(KeyCode code in GameManager.Instance.usableKeys)
             {
                 if (Input.GetKey(code))
                 {
-                    if (GameManager.Instance.usableKeys.Contains(code))
+                    pressedInput.Add( code );
+                    if ( !keyDowns.Contains(code) )
                     {
+                        Debug.Log("code " + code);
                         m_activeInputs.Remove( code ); 
                         m_activeInputs.Add( code ); 
-                        pressedInput.Add( code );
+                        
                         AddToKeyDowns(code);
-                    }
-                    else
-                    {
-                        Debug.Log(code + " is not a usable key.");
                     }
                 }
             }
@@ -81,6 +80,7 @@ public class InputManager : MonoBehaviour
     {
         if (keyUps.Count == 0 || !keyUps.Contains(keyCode))
         {
+            Debug.Log("have keyupEvent for " + keyCode);
             keyUps.Add(keyCode);
             keyDowns.Remove(keyCode);
             keyUpEvent.Invoke(keyCode);
@@ -89,12 +89,11 @@ public class InputManager : MonoBehaviour
 
     private void AddToKeyDowns(KeyCode keyCode)
     {
-        if (!keyDowns.Contains(keyCode))
-        {
-            keyDowns.Add(keyCode);
-            keyUps.Remove(keyCode);
-            keyDownEvent.Invoke(keyCode);
-        }
+        if (keyDowns.Count != 0 && keyDowns.Contains(keyCode)) return;
+        //Debug.Log("have keydownevent for " + keyCode);
+        keyDowns.Add(keyCode);
+        keyUps.Remove(keyCode);
+        keyDownEvent.Invoke(keyCode);
     }
 
     public void ClearLists()

@@ -712,6 +712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6547405ce7e003845a80b1f373cfc996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moleCount: 3
   holes:
   - {fileID: 7399475334210046436}
   - {fileID: 916213742}
@@ -725,14 +726,9 @@ MonoBehaviour:
   usableKeys: 
   molePrefabs:
   - {fileID: 3002564476038175540, guid: 2597dae1e0d4ed74a83f649f1711abb2, type: 3}
-  - {fileID: 3002564476038175540, guid: 2597dae1e0d4ed74a83f649f1711abb2, type: 3}
-  - {fileID: 3002564476038175540, guid: 2597dae1e0d4ed74a83f649f1711abb2, type: 3}
-  - {fileID: 3002564476038175540, guid: 2597dae1e0d4ed74a83f649f1711abb2, type: 3}
-  molesInGame:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 3002564476038175540, guid: 050e4d23976f73a488cf441d5b547fec, type: 3}
+  - {fileID: 3002564476038175540, guid: a95f53e8cb3e5ac4b860098ebfec9566, type: 3}
+  molesInGame: []
 --- !u!4 &743316626
 Transform:
   m_ObjectHideFlags: 0
@@ -1129,6 +1125,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  m_activeInputs: 
 --- !u!4 &1488366592
 Transform:
   m_ObjectHideFlags: 0
