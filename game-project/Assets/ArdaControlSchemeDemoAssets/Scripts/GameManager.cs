@@ -79,7 +79,6 @@ public class GameManager : MonoBehaviour
 
         }
 
-        Debug.Log("cleared lists");
         InputManager.Instance.ClearLists();
     }
 
