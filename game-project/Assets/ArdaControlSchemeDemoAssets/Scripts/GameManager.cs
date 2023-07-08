@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
 
     public Hole[] holes;
     private Dictionary<KeyCode,Hole> holeCodes = new Dictionary< KeyCode,Hole>();
+    private Dictionary<Vector2,Hole> holePoss = new Dictionary< Vector2,Hole>();
 
     public MoleController[] molePrefabs = new MoleController[4];
 
@@ -34,12 +35,9 @@ public class GameManager : MonoBehaviour
         foreach (var hole in holes)
         {
             holeCodes.Add(hole.keyCode, hole);
+            holePoss.Add(hole.holePosition, hole);
         }
-
-        foreach (var pair in holeCodes)
-        {
-            Debug.Log(pair.Key + "--" + pair.Value);
-        }
+        
         
         //instantiate 1 mole and set the hole and mole parameters
         molesInGame[0] = Instantiate(molePrefabs[0], holes[0].transform.position, Quaternion.identity);
@@ -79,5 +77,10 @@ public class GameManager : MonoBehaviour
         
         InputManager.Instance.ClearLists();
     }
-    
+
+
+    public Hole GetHoleFromHolePos(Vector2 holePos)
+    {
+        return holePoss[holePos];
+    }
 }

@@ -10,7 +10,8 @@ public class Hole : MonoBehaviour
     {
         Free,
         Full,
-        Coin
+        Coin,
+        Unusable
     }
 
     public Occupation occupationState;

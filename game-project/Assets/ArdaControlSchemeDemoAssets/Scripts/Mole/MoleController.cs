@@ -11,6 +11,8 @@ public class MoleController : MonoBehaviour
     
     public Vector2 molePosition;
 
+    public bool isDead;
+
     private void Start()
     {
         //MoveTo(GameManager.Instance.holes[1]);
@@ -18,11 +20,18 @@ public class MoleController : MonoBehaviour
 
     public void MoveTo(Hole holeToMoveTo)
     {
-        if (holeToMoveTo.occupationState == Hole.Occupation.Full)
+        if (isDead)
+        {
+            Debug.Log("this man dedd");
+            return;
+        }
+        
+        if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable)
         {
             Debug.Log("the " + holeToMoveTo + " is full");
             return;
         }
+        
         currentHole.occupationState = Hole.Occupation.Free;
         StartCoroutine(GoDown(holeToMoveTo.transform.position));
         holeToMoveTo.occupyingMole = this;
@@ -66,5 +75,13 @@ public class MoleController : MonoBehaviour
 
         Debug.Log("finito");
         
+    }
+
+    public void Hit()
+    {
+        Debug.Log(name + " got hit");
+        currentHole.occupationState = Hole.Occupation.Unusable;
+        isDead = true;
+        GetComponent<SpriteRenderer>().color = Color.black;
     }
 }
