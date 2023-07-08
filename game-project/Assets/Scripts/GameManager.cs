@@ -10,9 +10,9 @@ public class GameManager : MonoBehaviour
 
     public Mole[] activeCharacters = new Mole[4];
 
-    private Mole selectedCharacter;
+    public Map map;
 
-    public Hole[] holes = new Hole[9];
+    private Mole selectedCharacter;
 
     void Awake()
     {
@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
     {
         for (int i = 0; i < characters.Length; i++)
         {
-            activeCharacters[i] = Instantiate(characters[i], holes[i].transform.position, holes[i].transform.rotation);
-            holes[i].occupied = true;
+            activeCharacters[i] = Instantiate(characters[i], map.holes[i].transform.position, map.holes[i].transform.rotation);
+            map.holes[i].occupied = true;
         }
     }
 
@@ -59,9 +59,9 @@ public class GameManager : MonoBehaviour
         if (selectedCharacter)
         {
             if (Input.GetKeyDown(KeyCode.UpArrow))
-                selectedCharacter.MoveUp();
+                selectedCharacter.MoveBack();
             if (Input.GetKeyDown(KeyCode.DownArrow))
-                selectedCharacter.MoveDown();
+                selectedCharacter.MoveForward();
             if (Input.GetKeyDown(KeyCode.LeftArrow))
                 selectedCharacter.MoveLeft();
             if (Input.GetKeyDown(KeyCode.RightArrow))

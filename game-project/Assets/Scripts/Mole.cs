@@ -5,12 +5,12 @@ using UnityEngine;
 public class Mole : MonoBehaviour
 {
     public KeyCode selectionKeyCode;
-    public void MoveUp()
+    public void MoveBack()
     {
 
     }
 
-    public void MoveDown()
+    public void MoveForward()
     {
 
     }
