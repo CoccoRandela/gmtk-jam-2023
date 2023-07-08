@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class HammerController : MonoBehaviour
+public class Hammer : MonoBehaviour
 {
     private Vector3 _restingPos;
     public GameObject shadow;

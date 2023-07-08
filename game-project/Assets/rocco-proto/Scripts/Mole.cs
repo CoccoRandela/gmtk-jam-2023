@@ -11,7 +11,7 @@ public class Mole : MonoBehaviour
     public void MoveBack()
     {
         (int, int) newMatrixIndex = (currentMatrixIndex.Item1 - 1, currentMatrixIndex.Item2);
-        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0) return;
+        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0 || newMatrixIndex.Item1 >= GameManager.Instance.map.rows || newMatrixIndex.Item2 >= GameManager.Instance.map.columns) return;
         if (GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].occupied) return;
         gameObject.transform.position = GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].transform.position;
         GameManager.Instance.map.holes[currentMatrixIndex.Item1, currentMatrixIndex.Item2].occupied = false;
@@ -23,7 +23,7 @@ public class Mole : MonoBehaviour
     {
         Debug.Log(currentMatrixIndex);
         (int, int) newMatrixIndex = (currentMatrixIndex.Item1 + 1, currentMatrixIndex.Item2);
-        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0) return;
+        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0 || newMatrixIndex.Item1 >= GameManager.Instance.map.rows || newMatrixIndex.Item2 >= GameManager.Instance.map.columns) return;
         if (GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].occupied) return;
         gameObject.transform.position = GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].gameObject.transform.position;
         GameManager.Instance.map.holes[currentMatrixIndex.Item1, currentMatrixIndex.Item2].occupied = false;
@@ -34,7 +34,7 @@ public class Mole : MonoBehaviour
     {
         Debug.Log(currentMatrixIndex);
         (int, int) newMatrixIndex = (currentMatrixIndex.Item1, currentMatrixIndex.Item2 - 1);
-        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0) return;
+        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0 || newMatrixIndex.Item1 >= GameManager.Instance.map.rows || newMatrixIndex.Item2 >= GameManager.Instance.map.columns) return;
         if (GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].occupied) return;
         gameObject.transform.position = GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].gameObject.transform.position;
         GameManager.Instance.map.holes[currentMatrixIndex.Item1, currentMatrixIndex.Item2].occupied = false;
@@ -45,7 +45,7 @@ public class Mole : MonoBehaviour
     {
         Debug.Log(currentMatrixIndex);
         (int, int) newMatrixIndex = (currentMatrixIndex.Item1, currentMatrixIndex.Item2 + 1);
-        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0) return;
+        if (newMatrixIndex.Item1 < 0 || newMatrixIndex.Item2 < 0 || newMatrixIndex.Item1 >= GameManager.Instance.map.rows || newMatrixIndex.Item2 >= GameManager.Instance.map.columns) return;
         if (GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].occupied) return;
         gameObject.transform.position = GameManager.Instance.map.holes[newMatrixIndex.Item1, newMatrixIndex.Item2].gameObject.transform.position;
         GameManager.Instance.map.holes[currentMatrixIndex.Item1, currentMatrixIndex.Item2].occupied = false;
