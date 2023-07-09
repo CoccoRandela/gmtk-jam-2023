@@ -3,25 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
     [Header("GamePlay Variables")] public int moleCount;
-
+    
     public static GameManager Instance;
 
     public Hole[] holes;
     public List<KeyCode> usableKeys = new List<KeyCode>();
-    private Dictionary<KeyCode, Hole> holeCodes = new Dictionary<KeyCode, Hole>();
-    private Dictionary<Vector2, Hole> holePoss = new Dictionary<Vector2, Hole>();
+    private Dictionary<KeyCode,Hole> holeCodes = new Dictionary< KeyCode,Hole>();
+    private Dictionary<Vector2,Hole> holePoss = new Dictionary< Vector2,Hole>();
 
     public List<MoleController> molePrefabs = new List<MoleController>();
 
     public List<MoleController> molesInGame = new List<MoleController>();
-
-    public UnityEvent ShowStartMenuEvent;
 
     private void Awake()
     {
@@ -31,11 +28,11 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            Destroy(this);
+            Destroy(this); 
         }
-    }
+    } 
 
-
+    
     void Start()
     {
         foreach (var hole in holes)
@@ -44,20 +41,17 @@ public class GameManager : MonoBehaviour
             holePoss.Add(hole.holePosition, hole);
             usableKeys.Add(hole.keyCode);
         }
-
-        ShowStartMenuEvent.Invoke();
-        //instantiate 1 mole and set the hole and mole parameters
-        molesInGame[0] = Instantiate(molePrefabs[0], holes[0].transform.position, Quaternion.identity);
-        holes[0].occupyingMole = molesInGame[0];
-        molesInGame[0].currentHole = holes[0];
-        holes[0].occupationState = Hole.Occupation.Full;
-
-        molesInGame[1] = Instantiate(molePrefabs[0], holes[1].transform.position, Quaternion.identity);
-        holes[1].occupyingMole = molesInGame[1];
-        molesInGame[1].currentHole = holes[1];
-        holes[1].occupationState = Hole.Occupation.Full;
+        
+        //TODO Change molePrefabs[0] to molePrefabs[i] when the different moles are here
+        for (int i = 0; i < moleCount; i++)
+        {
+            molesInGame.Add(Instantiate(molePrefabs[0], holes[i].transform.position, Quaternion.identity));
+            holes[i].occupyingMole = molesInGame[i];
+            molesInGame[i].currentHole = holes[i];
+            holes[i].occupationState = Hole.Occupation.Full;
+        }
     }
-
+    
 
     public void OnKeyUpEvent(KeyCode keyCode)
     {
@@ -67,11 +61,12 @@ public class GameManager : MonoBehaviour
             return;
         }
         holeCodes[keyCode].GetComponent<SpriteRenderer>().color = Color.black;
+        
     }
 
     public void OnKeyDownEvent(KeyCode keyCode)
     {
-
+        
         for (int i = 0; i < InputManager.Instance.keyUps.Count; i++)
         {
             KeyCode holeToMoveFrom = InputManager.Instance.keyUps[i];
