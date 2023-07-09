@@ -72,6 +72,7 @@ point, there is going to be another hammer and (maybe) it would be nice to diffe
  {
   LevelStarted?.Invoke();
  }public static void InvokeLevelEndedEvent()
+ 
  {
   LevelEnded?.Invoke();
  }public static void InvokeGamePausedEvent()
