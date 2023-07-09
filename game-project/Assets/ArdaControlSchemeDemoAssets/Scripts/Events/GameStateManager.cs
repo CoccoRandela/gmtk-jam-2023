@@ -73,15 +73,6 @@ public class GameStateManager : MonoBehaviour
     {
         GameStarted?.Invoke();
     }
-    public static void InvokeLevelStartedEvent()
-    {
-        LevelStarted?.Invoke();
-    }
-    public static void InvokeLevelEndedEvent()
-
-    {
-        LevelEnded?.Invoke();
-    }
     public static void InvokeGamePausedEvent()
     {
         GamePaused?.Invoke();

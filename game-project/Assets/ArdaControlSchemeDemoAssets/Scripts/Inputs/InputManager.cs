@@ -32,6 +32,7 @@ public class InputManager : MonoBehaviour
 
     public void Update()
     {
+        if (GameManager.Instance.isMoving) return;
         if (Input.GetKey(KeyCode.Space))
         {
             ClearLists();
@@ -79,6 +80,7 @@ public class InputManager : MonoBehaviour
 
     private void AddToKeyUps(KeyCode keyCode)
     {
+        
         if (keyUps.Count == 0 || !keyUps.Contains(keyCode))
         {
             keyUps.Add(keyCode);

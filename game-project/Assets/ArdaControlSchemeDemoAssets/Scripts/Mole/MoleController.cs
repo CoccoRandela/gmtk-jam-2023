@@ -11,6 +11,8 @@ public class MoleController : MonoBehaviour
     
     public Vector2 molePosition;
 
+    public bool isMoving;
+    
     public bool isDead;
 
     private void Start()
@@ -25,18 +27,23 @@ public class MoleController : MonoBehaviour
             Debug.Log("this man dedd");
             return;
         }
+
+        if (isMoving)
+        {
+            return;
+        }
         
-        if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable
-            )
+        if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable)
         {
             Debug.Log("the " + holeToMoveTo + " is full");
             return;
         }
-        
+
+        isMoving = true;
+        holeToMoveTo.occupationState = Hole.Occupation.Full;
         currentHole.occupationState = Hole.Occupation.Free;
         StartCoroutine(GoDown(holeToMoveTo.transform.position));
         holeToMoveTo.occupyingMole = this;
-        holeToMoveTo.occupationState = Hole.Occupation.Full;
         currentHole = holeToMoveTo;
 
     }
@@ -52,7 +59,7 @@ public class MoleController : MonoBehaviour
                 break;
             }
 
-            transform.position -= new Vector3(0,5f * Time.deltaTime,0);
+            transform.position -= new Vector3(0,3f * Time.deltaTime,0);
             yield return null;
         }
 
@@ -70,9 +77,11 @@ public class MoleController : MonoBehaviour
                 break;
             }
 
-            transform.position += new Vector3(0,5f * Time.deltaTime,0);
+            transform.position += new Vector3(0,3f * Time.deltaTime,0);
             yield return null;
         }
+
+        isMoving = false;
     }
 
     public void Hit()
