@@ -2,17 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
     public TMPro.TMP_Text moleText;
     public TMPro.TMP_Text aText;
     public TMPro.TMP_Text whackText;
+    public Button startGameBtn;
 
     void Awake()
     {
-        Debug.Log(transform.position);
-        Debug.Log(transform.localPosition);
+        startGameBtn.enabled = false;
     }
 
     public async void Fall()
@@ -30,6 +31,12 @@ public class StartMenu : MonoBehaviour
         whackText.gameObject.SetActive(true);
 
         await whackText.transform.DOScale(Vector3.one, 0.4f).AsyncWaitForCompletion();
+
+        startGameBtn.gameObject.SetActive(true);
+
+        await startGameBtn.transform.DOScale(Vector3.one, 0.4f).AsyncWaitForCompletion();
+
+        startGameBtn.enabled = true;
 
     }
 }
