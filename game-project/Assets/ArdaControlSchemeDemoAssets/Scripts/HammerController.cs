@@ -2,35 +2,39 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class HammerController : MonoBehaviour
 {
     private Vector3 _restingPos;
     public GameObject shadow;
+    public int bpm;
 
-    public int difficulty; //determines how possible it is that the hammer will attack an occupied hole
+    [FormerlySerializedAs("difficulty")] public int playerWeight; //determines how possible it is that the hammer will attack an occupied hole
+    public int coinWeight; //determines how possible it is that the hammer will attack a coin hole
 
+    private float ticker;
     private void Awake()
     {
         _restingPos = transform.position;
     }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        InvokeRepeating("StartChooseHoleCoroutine",3, 2);
-    }
+    
 
     private void StartChooseHoleCoroutine()
     {
         StartCoroutine(ChooseHole());
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
-        
+        ticker += Time.deltaTime;
+
+        if (ticker >= 60f/bpm)
+        {
+            ticker -= 60f/bpm;// recalibrates every beat(maybe bad idea?)
+            StartChooseHoleCoroutine();
+        }
     }
 
     private IEnumerator ChooseHole()
@@ -48,7 +52,7 @@ public class HammerController : MonoBehaviour
             holeList.Add(hole.holePosition);
             if (hole.occupationState == Hole.Occupation.Full)//if its full, add it "difficulty" more times so there is more chance to hit that one
             {
-                for (int i = 0; i < difficulty; i++)
+                for (int i = 0; i < playerWeight; i++)
                 {
                     holeList.Add(hole.holePosition);
                 }
@@ -56,7 +60,7 @@ public class HammerController : MonoBehaviour
 
             if (hole.occupationState == Hole.Occupation.Coin)
             {
-                for (int i = 0; i < difficulty/2; i++)
+                for (int i = 0; i < coinWeight; i++)
                 {
                     holeList.Add(hole.holePosition);
                 }
@@ -70,7 +74,7 @@ public class HammerController : MonoBehaviour
         float lerpT = 0;
         while (true)
         {
-            lerpT += 1f * Time.deltaTime;
+            lerpT += bpm/60f * Time.deltaTime;
             shadow.transform.position = Vector3.Lerp(shadowStartPos, chosenHole.transform.position, lerpT);
             shadow.transform.localScale = Vector3.Lerp(shadowStartScale, new Vector3(1, 1, 1), lerpT);
             if (lerpT >= 1)

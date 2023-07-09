@@ -100,7 +100,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8495781453960119533
 Transform:
   m_ObjectHideFlags: 0
@@ -132,7 +132,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shadow: {fileID: 8495781453001810405}
-  difficulty: 4
+  bpm: 0
+  playerWeight: 6
+  coinWeight: 0
 --- !u!1 &8495781453981035721
 GameObject:
   m_ObjectHideFlags: 0

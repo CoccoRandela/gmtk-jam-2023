@@ -1,9 +1,8 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,8 +12,14 @@ public class GameManager : MonoBehaviour
     //public bool shouldIncreaseHoles;
     //public int increaseHoleTime;//every "increaseHoleTime" seconds, one more hole will be added
     public int startingHammerCount;
-    public int coinTimer;//1 coin every this seconds
-    public int LevelBPM;//60 = hammers hit once every second, 120 means 2 hits every second and so on
+    public float addHammerTimer;
+    private float addHammerTick;
+    public float coinTimer;//1 coin every this seconds
+    private float coinTick;
+    [FormerlySerializedAs("LevelBPM")] public int StartingBPM;//60 = hammers hit once every second, 120 means 2 hits every second and so on
+    public float BPMRampUpTimer;//ramp up the bpm every x seconds 
+    private float BPMRampUpTick;
+    public int BPMRampUpAmount;
     
     [Header("Rest of the stuff")]
     
@@ -27,10 +32,17 @@ public class GameManager : MonoBehaviour
     
     public List<GameObject> holeWorldPositions= new List<GameObject>();
 
+    private List<MoleController> molesInGame = new List<MoleController>();
+    private List<HammerController> hammersInGame = new List<HammerController>();
+    [Header("Prefabs")]
     public List<MoleController> molePrefabs = new List<MoleController>();
+    public List<HammerController> hammerPrefabs = new List<HammerController>();
+    public List<Transform> hammerRestingPoints = new List<Transform>();
+    public GameObject coinPrefab;
 
-    public List<MoleController> molesInGame = new List<MoleController>();
-
+    public bool isMoving;//I know this is bad shut up its a game jam -Arda
+    
+    private int hammerCount;
     private void Awake()
     {
         if (Instance == null)
@@ -44,16 +56,20 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void Start()//
+    private void Start()
     {
-        GameStateManager.InvokeMenuStartedEvent();
-        GameStart();//this is temporary
+        //GameStateManager.InvokeMenuStartedEvent();
+        GameStart();//this is temporary change this to start when startgame is pressed or hook this up to the gamestarted event and invoke it with startgame button
     }
 
-    void GameStart()//TODO: instantiate holes and moles looking up from a double array on each levelStart
+    void GameStart()
     {
-        
         GameStateManager.InvokeGameStartedEvent();
+
+        for (int i = 0; i < startingHammerCount; i++)
+        {
+            SpawnHammer();
+        }
 
         for (var i = 0; i < holes.Length; i++)
         {
@@ -75,21 +91,25 @@ public class GameManager : MonoBehaviour
             molesInGame[i].transform.parent = holes[i].transform;
         }
     }
-    
-    
-    
 
-    public void OnKeyUpEvent(KeyCode keyCode)
+    private void SpawnHammer()
     {
-        if (holeCodes[keyCode].occupationState != Hole.Occupation.Full)
-        {
-            InputManager.Instance.keyUps.Remove(keyCode);
-            return;
-        }
-        holeCodes[keyCode].GetComponent<SpriteRenderer>().color = Color.black;
-        
+        Debug.Log("what");
+        HammerController hammer = Instantiate(hammerPrefabs[Random.Range(0, hammerPrefabs.Count)], hammerRestingPoints[hammerCount%hammerRestingPoints.Count]);
+        hammersInGame.Add(hammer);
+        hammer.bpm = StartingBPM;
+        hammerCount++;
     }
 
+    public void RampUpHammerBpm()
+    {
+        StartingBPM += BPMRampUpAmount;
+        foreach (var hammer in hammersInGame)
+        {
+            hammer.bpm += BPMRampUpAmount;
+        }
+    }
+    
     private IEnumerator BringHoles()
     {
         int i = 0;
@@ -102,6 +122,18 @@ public class GameManager : MonoBehaviour
             i++;
         }
     }
+
+    public void OnKeyUpEvent(KeyCode keyCode)
+    {
+        if (holeCodes[keyCode].occupationState != Hole.Occupation.Full)
+        {
+            InputManager.Instance.keyUps.Remove(keyCode);
+            return;
+        }
+        holeCodes[keyCode].GetComponent<SpriteRenderer>().color = Color.black;
+        
+    }
+
 
     public void OnKeyDownEvent(KeyCode keyCode)
     {
@@ -124,5 +156,37 @@ public class GameManager : MonoBehaviour
     public Hole GetHoleFromHolePos(Vector2 holePos)
     {
         return holePosDict[holePos];
+    }
+
+    private void Update()
+    {
+        coinTick += Time.deltaTime;
+        addHammerTick += Time.deltaTime;
+        BPMRampUpTick += Time.deltaTime;
+
+        if (coinTick >= coinTimer)
+        {
+            coinTick = 0;
+            //spawn coin on a free tile
+        }
+
+        if (addHammerTick >= addHammerTimer)
+        {
+            addHammerTick = 0;
+            SpawnHammer();
+        }
+
+        if (BPMRampUpTick > BPMRampUpTimer)
+        {
+            BPMRampUpTick = 0;
+            RampUpHammerBpm();
+        }
+
+        isMoving = false;
+        foreach (var mole in molesInGame)
+        {
+            if (mole.isMoving) isMoving = true;
+        }
+
     }
 }
