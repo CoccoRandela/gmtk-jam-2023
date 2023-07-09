@@ -70,6 +70,7 @@ public class HammerController : MonoBehaviour
 
     private void HammerGoDown(Hole hole)
     {
+        shadow.GetComponent<SpriteRenderer>().color = Color.white;
         shadow.transform.DOMove(hole.transform.position, 30f/bpm).SetEase(Ease.Linear).OnComplete(() =>
         {
             transform.DOMoveX(hole.transform.position.x,  10f/bpm).SetEase(Ease.InQuad);
@@ -86,11 +87,12 @@ public class HammerController : MonoBehaviour
 
     private void CheckHit(Hole hole)
     {
+        shadow.GetComponent<SpriteRenderer>().color = Color.clear;
         if (hole.occupationState == Hole.Occupation.Full)
         {
             hole.occupyingMole.Hit();
         }
-        
+
         HammerGoUp();
     }
 }

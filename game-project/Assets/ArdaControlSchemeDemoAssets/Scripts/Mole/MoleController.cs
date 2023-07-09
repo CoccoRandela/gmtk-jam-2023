@@ -93,6 +93,7 @@ public class MoleController : MonoBehaviour
         animator.SetTrigger("isStunned");
         animator.SetBool("isSleeping", true);
         currentHole.occupationState = Hole.Occupation.Unusable;
+        currentHole.Unpicked();
         isStunned = true;
     }
 
