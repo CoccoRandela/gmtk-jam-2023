@@ -9,11 +9,16 @@ public class GameStateManager : MonoBehaviour
     public static GameStateManager Instance;
 
     public static event Action MenuStarted;
+
+    public static event Action MenuEnded;
     /*
      * Not sure if this is necessary, we can just use start method of the menu scene for anything we may do here
      */
 
     public static event Action GameStarted;
+
+
+    public static event Action GameRestarted;
     /*
      * -On event "GameStarted"
      * the very first level starts, in this level, LevelStarted will not be invoked so we can do
@@ -23,28 +28,10 @@ public class GameStateManager : MonoBehaviour
 
 
 
-    public static event Action LevelStarted;
-    /*
-    -On event “LevelStarted”,
-    The First non tutorial level starts
-   1) The map is instantiated with a cool tween/ each block comes from bottom and settles with an elastic tween
-   2) The moles are placed both sleeping/ when you pick one, it wakes up, when you pick the other, it sleeps
-   3) The hammer starts going:
-   There is an area, representing the possible hammers hits, which decreases with time to signal 
-   the players where the hammer is going to probably hit. The area should be colored because at a 
-   point, there is going to be another hammer and (maybe) it would be nice to differentiate between
-    the areas (but maybe not)
-   4) A coin gets placed on each run of the hammer in a location without moles
-   */
+
 
     public static event Action GamePaused;
     public static event Action GameResumed;
-
-
-    public static event Action LevelEnded;
-    /*
-     * Both Moles start sleeping, Hammers stop, points shown, next level button shown.
-     */
 
     public static event Action GameEnded;
     /*
@@ -69,9 +56,18 @@ public class GameStateManager : MonoBehaviour
     {
         MenuStarted?.Invoke();
     }
+
+    public static void InvokeMenuEndedEvent()
+    {
+        MenuEnded?.Invoke();
+    }
     public static void InvokeGameStartedEvent()
     {
         GameStarted?.Invoke();
+    }
+    public static void InvokeGameRestartedEvent()
+    {
+        GameRestarted?.Invoke();
     }
     public static void InvokeGamePausedEvent()
     {
