@@ -2,29 +2,32 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class MoleController : MonoBehaviour
 {
     //Movement, Stun, Revive, Position
 
+    public Animator animator;
+    
     public Hole currentHole;
     
     public Vector2 molePosition;
 
     public bool isMoving;
     
-    public bool isDead;
+    [FormerlySerializedAs("isDead")] public bool isStunned;
 
     private void Start()
     {
+        animator.SetBool("isSleeping", true);
         //MoveTo(GameManager.Instance.holes[1]);
     }
 
     public void MoveTo(Hole holeToMoveTo)
     {
-        if (isDead)
+        if (isStunned)
         {
-            Debug.Log("this man dedd");
             return;
         }
 
@@ -81,14 +84,28 @@ public class MoleController : MonoBehaviour
             yield return null;
         }
 
+        Sleep();
         isMoving = false;
     }
 
     public void Hit()
     {
         Debug.Log(name + " got hit");
+        animator.SetTrigger("isStunned");
+        animator.SetBool("isSleeping", true);
         currentHole.occupationState = Hole.Occupation.Unusable;
-        isDead = true;
+        isStunned = true;
         GetComponent<SpriteRenderer>().color = Color.black;
+    }
+
+
+    public void WakeUp()
+    {
+        animator.SetBool("isSleeping", false);
+    }
+
+    public void Sleep()
+    {
+        animator.SetBool("isSleeping", true);
     }
 }

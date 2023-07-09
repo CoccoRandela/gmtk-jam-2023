@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         holeCodes[keyCode].GetComponent<SpriteRenderer>().color = Color.black;
-
+        holeCodes[keyCode].occupyingMole.WakeUp();
     }
 
 
