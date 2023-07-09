@@ -7,6 +7,8 @@ using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
+    public AudioClip gameMusic;
+    
     [Header("GamePlay Variables")] public int moleCount;
     //if we have time implement these
     //public int startingHoleCount;
@@ -67,6 +69,8 @@ public class GameManager : MonoBehaviour
     void GameStart()
     {
         // GameStateManager.InvokeGameStartedEvent();
+        
+        SoundManager.Instance.PlayLoopingSound(gameMusic);
 
         for (int i = 0; i < startingHammerCount; i++)
         {
@@ -109,6 +113,8 @@ public class GameManager : MonoBehaviour
         {
             hammer.bpm += BPMRampUpAmount;
         }
+
+        SoundManager.Instance._audioSource.pitch += 0.1f;
     }
 
     private IEnumerator BringHoles()

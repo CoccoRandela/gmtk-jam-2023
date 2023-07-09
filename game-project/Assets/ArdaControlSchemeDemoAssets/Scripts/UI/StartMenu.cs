@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,17 +11,25 @@ public class StartMenu : MonoBehaviour
     public GameObject aText;
     public GameObject whackText;
     public Button startGameBtn;
+    public AudioClip introMusic;
 
     void Awake()
     {
         startGameBtn.enabled = false;
     }
 
+    private void Start()
+    {
+        SoundManager.Instance.PlaySound(introMusic);
+    }
+
     public async void Fall()
     {
+        
         await transform.DOLocalMove(Vector3.zero, 1).SetEase(Ease.OutBounce).AsyncWaitForCompletion();
 
         moleText.SetActive(true);
+        
 
         await moleText.transform.DOScale(new Vector3(5, 5), 0.4f).AsyncWaitForCompletion();
 

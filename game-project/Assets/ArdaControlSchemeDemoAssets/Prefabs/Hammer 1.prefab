@@ -131,11 +131,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2059ea17d90fd84e83cbe7618533285, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Smash: {fileID: 8300000, guid: 7f1c7369dce835845afa1b193368f545, type: 3}
   _restingPos: {x: 0, y: 0, z: 0}
   shadow: {fileID: 8495781453001810405}
   bpm: 0
   playerWeight: 6
   coinWeight: 0
+  ticker: 0
 --- !u!95 &-3013624140879806535
 Animator:
   serializedVersion: 5

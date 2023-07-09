@@ -8,6 +8,8 @@ using DG.Tweening;
 
 public class HammerController : MonoBehaviour
 {
+    public AudioClip Smash;
+    
     public Vector3 _restingPos;
     public GameObject shadow;
     public int bpm;
@@ -88,6 +90,8 @@ public class HammerController : MonoBehaviour
 
     private void CheckHit(Hole hole)
     {
+        SoundManager.Instance.PlayEffect(Smash);
+        hole.Unpicked();
         GameManager.Instance.ShakeAround(hole);
         shadow.GetComponent<SpriteRenderer>().color = Color.clear;
         if (hole.occupationState == Hole.Occupation.Full)
