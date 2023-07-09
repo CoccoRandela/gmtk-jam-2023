@@ -7,6 +7,7 @@ using UnityEngine;
 public class Hole : MonoBehaviour
 {
     public Vector2 holePosition;
+    public SpriteRenderer PickIndicator;
 
     public enum Occupation
     {
@@ -26,5 +27,15 @@ public class Hole : MonoBehaviour
     public void MoveTo(Vector3 pos)
     {
         transform.DOMove(pos, 2).SetEase(animationCurve);
+    }
+
+    public void Picked()
+    {
+        PickIndicator.enabled = true;
+    }
+
+    public void Unpicked()
+    {
+        PickIndicator.enabled = false;
     }
 }

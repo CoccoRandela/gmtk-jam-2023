@@ -129,7 +129,7 @@ public class GameManager : MonoBehaviour
             InputManager.Instance.keyUps.Remove(keyCode);
             return;
         }
-        holeCodes[keyCode].GetComponent<SpriteRenderer>().color = Color.black;
+        holeCodes[keyCode].Picked();
         holeCodes[keyCode].occupyingMole.WakeUp();
     }
 
@@ -143,8 +143,8 @@ public class GameManager : MonoBehaviour
             KeyCode holeToMoveTo = InputManager.Instance.keyDowns[i];
             holeCodes[holeToMoveFrom].occupyingMole.MoveTo(holeCodes[holeToMoveTo]);
 
-            holeCodes[holeToMoveFrom].GetComponent<SpriteRenderer>().color = Color.gray;
-            holeCodes[holeToMoveTo].GetComponent<SpriteRenderer>().color = Color.black;
+            holeCodes[holeToMoveFrom].Unpicked();
+            holeCodes[holeToMoveTo].Picked();
 
         }
 
