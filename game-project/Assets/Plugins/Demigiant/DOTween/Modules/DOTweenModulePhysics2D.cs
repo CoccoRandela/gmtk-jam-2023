@@ -1,4 +1,4 @@
-// Author: Daniele Giardini - http://www.demigiant.com
+﻿// Author: Daniele Giardini - http://www.demigiant.com
 // Created: 2018/07/13
 
 #if true && (UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_5 || UNITY_2017_1_OR_NEWER) // MODULE_MARKER
@@ -87,10 +87,15 @@ namespace DG.Tweening
                     .SetOptions(AxisConstraint.X, snapping).SetEase(Ease.Linear)
                 ).Join(yTween)
                 .SetTarget(target).SetEase(DOTween.defaultEaseType);
+<<<<<<< HEAD
             yTween.OnUpdate(() =>
             {
                 if (!offsetYSet)
                 {
+=======
+            yTween.OnUpdate(() => {
+                if (!offsetYSet) {
+>>>>>>> fccc488 (Adds Dotween and Pause events)
                     offsetYSet = true;
                     offsetY = s.isRelative ? endValue.y : endValue.y - startPosY;
                 }
@@ -190,6 +195,10 @@ namespace DG.Tweening
         #endregion
 
         #endregion
+<<<<<<< HEAD
     }
+=======
+	}
+>>>>>>> fccc488 (Adds Dotween and Pause events)
 }
 #endif
