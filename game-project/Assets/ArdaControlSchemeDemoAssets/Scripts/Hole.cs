@@ -12,6 +12,7 @@ public class Hole : MonoBehaviour
     {
         Free,
         Full,
+        Coin,
         Unusable
     }
 
