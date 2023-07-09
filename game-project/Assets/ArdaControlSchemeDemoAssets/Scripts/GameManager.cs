@@ -82,10 +82,9 @@ public class GameManager : MonoBehaviour
 
         StartCoroutine("BringHoles");
 
-        //TODO Change molePrefabs[0] to molePrefabs[i] when the different moles are here
         for (int i = 0; i < moleCount; i++)
         {
-            molesInGame.Add(Instantiate(molePrefabs[0], holes[i].transform.position, Quaternion.identity));
+            molesInGame.Add(Instantiate(molePrefabs[i], holes[i].transform.position, Quaternion.identity));
             holes[i].occupyingMole = molesInGame[i];
             molesInGame[i].currentHole = holes[i];
             holes[i].occupationState = Hole.Occupation.Full;

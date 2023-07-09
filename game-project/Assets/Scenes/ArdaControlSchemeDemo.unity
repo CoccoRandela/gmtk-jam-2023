@@ -1501,6 +1501,7 @@ MonoBehaviour:
   - {fileID: 653568090}
   molePrefabs:
   - {fileID: 4548962300499772669, guid: 2986c54a0dd6c1b43837e364af41f003, type: 3}
+  - {fileID: 4988669744008218507, guid: 00b83f896192d7b4fa69f71b2cd63b68, type: 3}
   hammerPrefabs:
   - {fileID: 8495781453960119532, guid: a59a7f62701608b42afa55398511df1c, type: 3}
   - {fileID: 8495781453960119532, guid: c9f8ed5ae1fc80b47806a9f9e52150c7, type: 3}

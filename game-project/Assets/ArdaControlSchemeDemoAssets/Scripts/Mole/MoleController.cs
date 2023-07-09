@@ -90,12 +90,10 @@ public class MoleController : MonoBehaviour
 
     public void Hit()
     {
-        Debug.Log(name + " got hit");
         animator.SetTrigger("isStunned");
         animator.SetBool("isSleeping", true);
         currentHole.occupationState = Hole.Occupation.Unusable;
         isStunned = true;
-        GetComponent<SpriteRenderer>().color = Color.black;
     }
 
 
