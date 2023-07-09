@@ -15,7 +15,7 @@ public class HammerController : MonoBehaviour
     [FormerlySerializedAs("difficulty")] public int playerWeight; //determines how possible it is that the hammer will attack an occupied hole
     public int coinWeight; //determines how possible it is that the hammer will attack a coin hole
 
-    private float ticker;
+    public float ticker;
     private void Awake()
     {
         shadow.transform.parent = null;
@@ -35,6 +35,7 @@ public class HammerController : MonoBehaviour
 
     private void ChooseHole()
     {
+        this.transform.DOKill();
         List<Vector2> holeList = new List<Vector2>();
 
         foreach (var hole in GameManager.Instance.holes)
@@ -87,6 +88,7 @@ public class HammerController : MonoBehaviour
 
     private void CheckHit(Hole hole)
     {
+        GameManager.Instance.ShakeAround(hole);
         shadow.GetComponent<SpriteRenderer>().color = Color.clear;
         if (hole.occupationState == Hole.Occupation.Full)
         {

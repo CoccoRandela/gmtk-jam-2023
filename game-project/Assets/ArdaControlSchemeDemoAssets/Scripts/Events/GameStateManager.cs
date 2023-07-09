@@ -23,7 +23,6 @@ public class GameStateManager : MonoBehaviour
 
 
 
-    public static event Action LevelStarted;
     /*
     -On event “LevelStarted”,
     The First non tutorial level starts
@@ -39,12 +38,7 @@ public class GameStateManager : MonoBehaviour
 
     public static event Action GamePaused;
     public static event Action GameResumed;
-
-
-    public static event Action LevelEnded;
-    /*
-     * Both Moles start sleeping, Hammers stop, points shown, next level button shown.
-     */
+    
 
     public static event Action GameEnded;
     /*

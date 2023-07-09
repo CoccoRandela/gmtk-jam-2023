@@ -48,7 +48,7 @@ public class MoleController : MonoBehaviour
         StartCoroutine(GoDown(holeToMoveTo.transform.position));
         holeToMoveTo.occupyingMole = this;
         currentHole = holeToMoveTo;
-
+        transform.parent = currentHole.transform;
     }
     
 

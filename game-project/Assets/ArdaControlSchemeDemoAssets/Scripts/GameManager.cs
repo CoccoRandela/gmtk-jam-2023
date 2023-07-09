@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
@@ -94,9 +95,10 @@ public class GameManager : MonoBehaviour
 
     private void SpawnHammer()
     {
-        HammerController hammer = Instantiate(hammerPrefabs[Random.Range(0, hammerPrefabs.Count)], hammerRestingPoints[hammerCount % hammerRestingPoints.Count]);
+        HammerController hammer = Instantiate(hammerPrefabs[hammerCount % hammerPrefabs.Count], hammerRestingPoints[hammerCount % hammerRestingPoints.Count]);
         hammersInGame.Add(hammer);
         hammer.bpm = StartingBPM;
+        hammer.ticker = 0;
         hammerCount++;
     }
 
@@ -187,5 +189,61 @@ public class GameManager : MonoBehaviour
             if (mole.isMoving) isMoving = true;
         }
 
+    }
+
+    public void ShakeAround(Hole hole)
+    {
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(-1, 0)))
+        {
+            holePosDict[hole.holePosition + new Vector2(-1, 0)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(-1, 0)]?.transform.DOShakePosition(0.3f,0.5f);
+        }
+
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(-1, -1)))
+        {
+            holePosDict[hole.holePosition + new Vector2(-1, -1)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(-1, -1)]?.transform.DOShakePosition(0.3f, 0.3f);
+        }
+
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(-1, 1)))
+
+        {
+            holePosDict[hole.holePosition + new Vector2(-1, 1)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(-1, 1)]?.transform.DOShakePosition(0.3f, 0.3f);
+        }
+
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(1, -1)))
+        {
+            holePosDict[hole.holePosition + new Vector2(1, -1)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(1, -1)]?.transform.DOShakePosition(0.3f, 0.3f); 
+        }
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(1, 1)))
+        {
+            holePosDict[hole.holePosition + new Vector2(1, 1)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(1, 1)]?.transform.DOShakePosition(0.3f, 0.3f); 
+        }
+
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(0, 0)))
+        {
+            holePosDict[hole.holePosition + new Vector2(0, 0)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(0, 0)]?.transform.DOShakePosition(0.3f, 0.5f);
+        }
+
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(0, -1)))
+        {
+            holePosDict[hole.holePosition + new Vector2(0, -1)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(0, -1)]?.transform.DOShakePosition(0.3f, 0.5f);
+        }
+
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(1, 0)))
+        {
+            holePosDict[hole.holePosition + new Vector2(1, 0)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(1, 0)]?.transform.DOShakePosition(0.3f, 0.5f);
+        }
+        if (holePosDict.ContainsKey(hole.holePosition + new Vector2(0, 1)))
+        {
+            holePosDict[hole.holePosition + new Vector2(0, 1)]?.transform.DORestart();
+            holePosDict[hole.holePosition + new Vector2(0, 1)]?.transform.DOShakePosition(0.3f, 0.5f);
+        }
     }
 }
