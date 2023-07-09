@@ -34,6 +34,10 @@ public class GameStateManager : MonoBehaviour
  4) A coin gets placed on each run of the hammer in a location without moles
 */
 
+    public static event Action GamePaused;
+    public static event Action GameResumed;
+
+    
     public static event Action LevelEnded;
     /*
      * Both Moles start sleeping, Hammers stop, points shown, next level button shown.
