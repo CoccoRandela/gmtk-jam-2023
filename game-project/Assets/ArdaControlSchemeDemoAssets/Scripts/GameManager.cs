@@ -88,6 +88,8 @@ public class GameManager : MonoBehaviour
         {
             GameObject.Destroy(mole.gameObject);
         }
+
+        molesInGame.Clear();
         StartCoroutine("TakeAwayHoles");
     }
 
