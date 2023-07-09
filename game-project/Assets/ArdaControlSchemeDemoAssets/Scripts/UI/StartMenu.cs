@@ -6,9 +6,9 @@ using UnityEngine.UI;
 
 public class StartMenu : MonoBehaviour
 {
-    public TMPro.TMP_Text moleText;
-    public TMPro.TMP_Text aText;
-    public TMPro.TMP_Text whackText;
+    public GameObject moleText;
+    public GameObject aText;
+    public GameObject whackText;
     public Button startGameBtn;
 
     void Awake()
@@ -20,21 +20,21 @@ public class StartMenu : MonoBehaviour
     {
         await transform.DOLocalMove(Vector3.zero, 1).SetEase(Ease.OutBounce).AsyncWaitForCompletion();
 
-        moleText.gameObject.SetActive(true);
+        moleText.SetActive(true);
 
-        await moleText.transform.DOScale(Vector3.one, 0.4f).AsyncWaitForCompletion();
+        await moleText.transform.DOScale(new Vector3(5, 5), 0.4f).AsyncWaitForCompletion();
 
-        aText.gameObject.SetActive(true);
+        aText.SetActive(true);
 
-        await aText.transform.DOScale(Vector3.one, 0.4f).AsyncWaitForCompletion();
+        await aText.transform.DOScale(new Vector3(2, 2), 0.4f).AsyncWaitForCompletion();
 
-        whackText.gameObject.SetActive(true);
+        whackText.SetActive(true);
 
-        await whackText.transform.DOScale(Vector3.one, 0.4f).AsyncWaitForCompletion();
+        await whackText.transform.DOScale(new Vector3(5, 5), 0.4f).AsyncWaitForCompletion();
 
         startGameBtn.gameObject.SetActive(true);
 
-        await startGameBtn.transform.DOScale(Vector3.one, 0.4f).AsyncWaitForCompletion();
+        await startGameBtn.transform.DOScale(new Vector3(4, 4), 0.4f).AsyncWaitForCompletion();
 
         startGameBtn.enabled = true;
 
