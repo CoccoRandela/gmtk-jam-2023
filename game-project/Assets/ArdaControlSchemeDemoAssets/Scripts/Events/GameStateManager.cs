@@ -68,14 +68,8 @@ point, there is going to be another hammer and (maybe) it would be nice to diffe
  }public static void InvokeGameStartedEvent()
  {
   GameStarted?.Invoke();
- }public static void InvokeLevelStartedEvent()
- {
-  LevelStarted?.Invoke();
- }public static void InvokeLevelEndedEvent()
- 
- {
-  LevelEnded?.Invoke();
- }public static void InvokeGamePausedEvent()
+ }
+  public static void InvokeGamePausedEvent()
  {
   GamePaused?.Invoke();
  }public static void InvokeGameResumedEvent()

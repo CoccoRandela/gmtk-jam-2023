@@ -7,19 +7,14 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
-    public class LevelData//Level needs moles, holes, hammers, coins, level speed(bpm)
-    {
-        public int HoleCount;
-        public int MoleCount;
-        public int HammerCount;
-        public int CoinCount;
-        public int LevelBPM;
-    }
-
-    [Header("Levels")] public LevelData[] LevelDatas;
-    public int CurrentLevel;
     [Header("GamePlay Variables")] public int moleCount;
-    
+    //if we have time implement these
+    //public int startingHoleCount;
+    //public bool shouldIncreaseHoles;
+    //public int increaseHoleTime;//every "increaseHoleTime" seconds, one more hole will be added
+    public int startingHammerCount;
+    public int coinTimer;//1 coin every this seconds
+    public int LevelBPM;//60 = hammers hit once every second, 120 means 2 hits every second and so on
     
     [Header("Rest of the stuff")]
     
@@ -28,10 +23,10 @@ public class GameManager : MonoBehaviour
     public Hole[] holes;
     public List<KeyCode> usableKeys = new List<KeyCode>();
     private Dictionary<KeyCode,Hole> holeCodes = new Dictionary< KeyCode,Hole>();
-    private Dictionary<Vector2,Hole> holePoss = new Dictionary< Vector2,Hole>();
-
-    public GameObject holePrefab;
+    private Dictionary<Vector2,Hole> holePosDict = new Dictionary< Vector2,Hole>();//NOT THE ACTUAL WORLD POS, RELATIVE POS
     
+    public List<GameObject> holeWorldPositions= new List<GameObject>();
+
     public List<MoleController> molePrefabs = new List<MoleController>();
 
     public List<MoleController> molesInGame = new List<MoleController>();
@@ -47,40 +42,29 @@ public class GameManager : MonoBehaviour
             Destroy(this); 
         }
 
-        CurrentLevel = 0;
     }
 
     private void Start()//
     {
         GameStateManager.InvokeMenuStartedEvent();
-        LevelStart();//this is temporary
+        GameStart();//this is temporary
     }
 
-    void LevelStart()//TODO: instantiate holes and moles looking up from a double array on each levelStart
+    void GameStart()//TODO: instantiate holes and moles looking up from a double array on each levelStart
     {
-        CurrentLevel++;
-
-        if (CurrentLevel == LevelDatas.Length)
-        {
-            GameStateManager.InvokeLevelStartedEvent(); 
-            return;
-        }
-
-        var holePosParent = GameObject.FindWithTag("HolePositions");
-        //holePosParent.chil
-        for (int i = 0; i < LevelDatas[i].HoleCount; i++)
-        {
-            //Instantiate(holePrefab)
-        }
-        
-        foreach (var hole in holes)
-        {
-            holeCodes.Add(hole.keyCode, hole);
-            holePoss.Add(hole.holePosition, hole);
-            usableKeys.Add(hole.keyCode);
-        }
         
         GameStateManager.InvokeGameStartedEvent();
+
+        for (var i = 0; i < holes.Length; i++)
+        {
+            var hole = holes[i];
+            holeCodes.Add(hole.keyCode, hole);
+            holePosDict.Add(hole.holePosition, hole);
+            usableKeys.Add(hole.keyCode);
+        }
+
+        StartCoroutine("BringHoles");
+        
         //TODO Change molePrefabs[0] to molePrefabs[i] when the different moles are here
         for (int i = 0; i < moleCount; i++)
         {
@@ -106,6 +90,19 @@ public class GameManager : MonoBehaviour
         
     }
 
+    private IEnumerator BringHoles()
+    {
+        int i = 0;
+        while (true)
+        {
+            if (i == holes.Length) break;
+            yield return new WaitForSeconds(.1f);
+            var hole = holes[i];
+            hole.MoveTo(holeWorldPositions[i].transform.position);
+            i++;
+        }
+    }
+
     public void OnKeyDownEvent(KeyCode keyCode)
     {
         
@@ -126,6 +123,6 @@ public class GameManager : MonoBehaviour
 
     public Hole GetHoleFromHolePos(Vector2 holePos)
     {
-        return holePoss[holePos];
+        return holePosDict[holePos];
     }
 }
