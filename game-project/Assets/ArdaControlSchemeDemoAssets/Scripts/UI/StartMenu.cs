@@ -34,7 +34,7 @@ public class StartMenu : MonoBehaviour
 
         startGameBtn.gameObject.SetActive(true);
 
-        await startGameBtn.transform.DOScale(new Vector3(3, 3), 0.4f).AsyncWaitForCompletion();
+        await startGameBtn.transform.DOScale(new Vector3(4, 4), 0.4f).AsyncWaitForCompletion();
 
         startGameBtn.enabled = true;
 
