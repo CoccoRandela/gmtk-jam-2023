@@ -8,6 +8,8 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("GamePlay Variables")] public int moleCount;
+
     public static GameManager Instance;
 
     public Hole[] holes;
@@ -15,9 +17,9 @@ public class GameManager : MonoBehaviour
     private Dictionary<KeyCode, Hole> holeCodes = new Dictionary<KeyCode, Hole>();
     private Dictionary<Vector2, Hole> holePoss = new Dictionary<Vector2, Hole>();
 
-    public MoleController[] molePrefabs = new MoleController[4];
+    public List<MoleController> molePrefabs = new List<MoleController>();
 
-    public MoleController[] molesInGame = new MoleController[4];
+    public List<MoleController> molesInGame = new List<MoleController>();
 
     public UnityEvent ShowStartMenuEvent;
 
