@@ -50,9 +50,10 @@ public class GameManager : MonoBehaviour
         CurrentLevel = 0;
     }
 
-    private void Start()
+    private void Start()//
     {
-        LevelStart();
+        GameStateManager.InvokeMenuStartedEvent();
+        LevelStart();//this is temporary
     }
 
     void LevelStart()//TODO: instantiate holes and moles looking up from a double array on each levelStart
@@ -61,7 +62,7 @@ public class GameManager : MonoBehaviour
 
         if (CurrentLevel == LevelDatas.Length)
         {
-            GameStateManager.Instance.InvokeGameEndedEvent();
+            GameStateManager.InvokeLevelStartedEvent(); 
             return;
         }
 
@@ -79,6 +80,7 @@ public class GameManager : MonoBehaviour
             usableKeys.Add(hole.keyCode);
         }
         
+        GameStateManager.InvokeGameStartedEvent();
         //TODO Change molePrefabs[0] to molePrefabs[i] when the different moles are here
         for (int i = 0; i < moleCount; i++)
         {

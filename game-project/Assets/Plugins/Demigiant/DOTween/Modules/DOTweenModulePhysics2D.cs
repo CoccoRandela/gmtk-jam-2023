@@ -87,15 +87,10 @@ namespace DG.Tweening
                     .SetOptions(AxisConstraint.X, snapping).SetEase(Ease.Linear)
                 ).Join(yTween)
                 .SetTarget(target).SetEase(DOTween.defaultEaseType);
-<<<<<<< HEAD
             yTween.OnUpdate(() =>
             {
                 if (!offsetYSet)
                 {
-=======
-            yTween.OnUpdate(() => {
-                if (!offsetYSet) {
->>>>>>> fccc488 (Adds Dotween and Pause events)
                     offsetYSet = true;
                     offsetY = s.isRelative ? endValue.y : endValue.y - startPosY;
                 }
@@ -195,10 +190,6 @@ namespace DG.Tweening
         #endregion
 
         #endregion
-<<<<<<< HEAD
     }
-=======
-	}
->>>>>>> fccc488 (Adds Dotween and Pause events)
 }
 #endif

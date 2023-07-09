@@ -62,25 +62,25 @@ point, there is going to be another hammer and (maybe) it would be nice to diffe
   }
  }
 
- public void InvokeMenuStartedEvent()
+ public static void InvokeMenuStartedEvent()
  {
   MenuStarted?.Invoke();
- }public void InvokeGameStartedEvent()
+ }public static void InvokeGameStartedEvent()
  {
   GameStarted?.Invoke();
- }public void InvokeLevelStartedEvent()
+ }public static void InvokeLevelStartedEvent()
  {
   LevelStarted?.Invoke();
- }public void InvokeLevelEndedEvent()
+ }public static void InvokeLevelEndedEvent()
  {
   LevelEnded?.Invoke();
- }public void InvokeGamePausedEvent()
+ }public static void InvokeGamePausedEvent()
  {
   GamePaused?.Invoke();
- }public void InvokeGameResumedEvent()
+ }public static void InvokeGameResumedEvent()
  {
   GameResumed?.Invoke();
- }public void InvokeGameEndedEvent()
+ }public static void InvokeGameEndedEvent()
  {
   GameEnded?.Invoke();
  }

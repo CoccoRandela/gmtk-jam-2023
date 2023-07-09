@@ -8,7 +8,7 @@ public class UIManager : MonoBehaviour
     public StartMenu startMenu;
     void Start()
     {
-        GameManager.Instance.ShowStartMenuEvent.AddListener(ShowStartMenu);
+        GameStateManager.MenuStarted += ShowStartMenu; 
     }
 
     void ShowStartMenu()
