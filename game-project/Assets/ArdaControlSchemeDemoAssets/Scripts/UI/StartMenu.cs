@@ -42,7 +42,7 @@ public class StartMenu : MonoBehaviour
 
     public async void Remove(TweenCallback callback)
     {
-        await transform.DOLocalMove(new Vector3(0, 800), 1).AsyncWaitForCompletion();
+        await transform.DOLocalMove(new Vector3(0, 1000), 1).AsyncWaitForCompletion();
         callback();
     }
 }
