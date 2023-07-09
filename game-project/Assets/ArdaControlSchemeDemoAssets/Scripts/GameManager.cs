@@ -1,9 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
-using DG.Tweening;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
 
     public bool isMoving;//I know this is bad shut up its a game jam -Arda
 
+    public bool hasGameEnded;
+    public bool hasGameStarted;
+
     private int hammerCount;
     private void Awake()
     {
@@ -61,9 +64,31 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        //GameStateManager.InvokeMenuStartedEvent();
-        GameStateManager.InvokeMenuStartedEvent();//this is temporary change this to start when startgame is pressed or hook this up to the gamestarted event and invoke it with startgame button
+        GameStateManager.InvokeMenuStartedEvent();
+
+        GameStateManager.GameEnded += OnGameEnded;
         GameStateManager.GameStarted += GameStart;
+    }
+
+    void OnGameEnded()
+    {
+        hasGameEnded = true;
+        foreach (HammerController hammer in hammersInGame)
+        {
+            hammer.transform.DOKill();
+            GameObject.Destroy(hammer.gameObject);
+            hammerCount--;
+        }
+
+        holeCodes.Clear();
+        usableKeys.Clear();
+        holePosDict.Clear();
+
+        foreach (MoleController mole in molesInGame)
+        {
+            GameObject.Destroy(mole.gameObject);
+        }
+        StartCoroutine("TakeAwayHoles");
     }
 
     void GameStart()
@@ -95,6 +120,8 @@ public class GameManager : MonoBehaviour
             holes[i].occupationState = Hole.Occupation.Full;
             molesInGame[i].transform.parent = holes[i].transform;
         }
+
+        hasGameStarted = true;
     }
 
     private void SpawnHammer()
@@ -128,6 +155,20 @@ public class GameManager : MonoBehaviour
             hole.MoveTo(holeWorldPositions[i].transform.position);
             i++;
         }
+    }
+
+    private IEnumerator TakeAwayHoles()
+    {
+        int i = 0;
+        while (true)
+        {
+            if (i == holes.Length) break;
+            yield return new WaitForSeconds(.1f);
+            var hole = holes[i];
+            hole.MoveTo(new Vector3(holeWorldPositions[i].transform.position.x, 1000));
+            i++;
+        }
+        GameStateManager.InvokeMenuEndedEvent();
     }
 
     public void OnKeyUpEvent(KeyCode keyCode)
@@ -167,6 +208,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
+        if (hasGameEnded) return;
         coinTick += Time.deltaTime;
         addHammerTick += Time.deltaTime;
         BPMRampUpTick += Time.deltaTime;
@@ -195,6 +237,18 @@ public class GameManager : MonoBehaviour
             if (mole.isMoving) isMoving = true;
         }
 
+        if (hasGameStarted)
+        {
+            foreach (MoleController mole in molesInGame)
+            {
+                if (!mole.isStunned)
+                {
+                    return;
+                }
+            }
+
+            GameStateManager.InvokeGameEndedEvent();
+        }
     }
 
     public void ShakeAround(Hole hole)

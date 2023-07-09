@@ -9,11 +9,16 @@ public class GameStateManager : MonoBehaviour
     public static GameStateManager Instance;
 
     public static event Action MenuStarted;
+
+    public static event Action MenuEnded;
     /*
      * Not sure if this is necessary, we can just use start method of the menu scene for anything we may do here
      */
 
     public static event Action GameStarted;
+
+
+    public static event Action GameRestarted;
     /*
      * -On event "GameStarted"
      * the very first level starts, in this level, LevelStarted will not be invoked so we can do
@@ -36,8 +41,10 @@ public class GameStateManager : MonoBehaviour
    4) A coin gets placed on each run of the hammer in a location without moles
    */
 
+
     public static event Action GamePaused;
     public static event Action GameResumed;
+
     
 
     public static event Action GameEnded;
@@ -63,9 +70,18 @@ public class GameStateManager : MonoBehaviour
     {
         MenuStarted?.Invoke();
     }
+
+    public static void InvokeMenuEndedEvent()
+    {
+        MenuEnded?.Invoke();
+    }
     public static void InvokeGameStartedEvent()
     {
         GameStarted?.Invoke();
+    }
+    public static void InvokeGameRestartedEvent()
+    {
+        GameRestarted?.Invoke();
     }
     public static void InvokeGamePausedEvent()
     {

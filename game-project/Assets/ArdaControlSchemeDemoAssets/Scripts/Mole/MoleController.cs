@@ -9,13 +9,13 @@ public class MoleController : MonoBehaviour
     //Movement, Stun, Revive, Position
 
     public Animator animator;
-    
+
     public Hole currentHole;
-    
+
     public Vector2 molePosition;
 
     public bool isMoving;
-    
+
     [FormerlySerializedAs("isDead")] public bool isStunned;
 
     private void Start()
@@ -35,7 +35,7 @@ public class MoleController : MonoBehaviour
         {
             return;
         }
-        
+
         if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable)
         {
             Debug.Log("the " + holeToMoveTo + " is full");
@@ -50,7 +50,7 @@ public class MoleController : MonoBehaviour
         currentHole = holeToMoveTo;
         transform.parent = currentHole.transform;
     }
-    
+
 
     private IEnumerator GoDown(Vector3 nextPos)
     {
@@ -62,14 +62,14 @@ public class MoleController : MonoBehaviour
                 break;
             }
 
-            transform.position -= new Vector3(0,3f * Time.deltaTime,0);
+            transform.position -= new Vector3(0, 3f * Time.deltaTime, 0);
             yield return null;
         }
 
-        transform.position = nextPos - new Vector3(0,.5f, 0);
+        transform.position = nextPos - new Vector3(0, .5f, 0);
         StartCoroutine(GoUp());
     }
-    
+
     private IEnumerator GoUp()
     {
         Vector2 startPos = transform.position;
@@ -80,7 +80,7 @@ public class MoleController : MonoBehaviour
                 break;
             }
 
-            transform.position += new Vector3(0,3f * Time.deltaTime,0);
+            transform.position += new Vector3(0, 3f * Time.deltaTime, 0);
             yield return null;
         }
 
