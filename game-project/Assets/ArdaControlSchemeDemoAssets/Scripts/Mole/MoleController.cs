@@ -73,9 +73,6 @@ public class MoleController : MonoBehaviour
             transform.position += new Vector3(0,5f * Time.deltaTime,0);
             yield return null;
         }
-
-        Debug.Log("finito");
-        
     }
 
     public void Hit()
