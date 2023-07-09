@@ -39,4 +39,10 @@ public class StartMenu : MonoBehaviour
         startGameBtn.enabled = true;
 
     }
+
+    public async void Remove(TweenCallback callback)
+    {
+        await transform.DOLocalMove(new Vector3(0, 800), 1).AsyncWaitForCompletion();
+        callback();
+    }
 }

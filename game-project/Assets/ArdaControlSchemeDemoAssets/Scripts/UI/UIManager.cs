@@ -6,9 +6,12 @@ using DG.Tweening;
 public class UIManager : MonoBehaviour
 {
     public StartMenu startMenu;
+    public GameObject scoreBoard;
+
     void Start()
     {
-        GameStateManager.MenuStarted += ShowStartMenu; 
+        GameStateManager.MenuStarted += ShowStartMenu;
+        GameStateManager.GameStarted += RemoveStartMenu;
     }
 
     void ShowStartMenu()
@@ -16,10 +19,13 @@ public class UIManager : MonoBehaviour
         startMenu.Fall();
     }
 
-
-    // Update is called once per frame
-    void Update()
+    void RemoveStartMenu()
     {
-
+        startMenu.Remove(ShowScoreBoard);
     }
+    public void ShowScoreBoard()
+    {
+        scoreBoard.SetActive(true);
+    }
+
 }
