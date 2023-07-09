@@ -53,6 +53,14 @@ public class HammerController : MonoBehaviour
                     holeList.Add(hole.holePosition);
                 }
             }
+
+            if (hole.occupationState == Hole.Occupation.Coin)
+            {
+                for (int i = 0; i < difficulty/2; i++)
+                {
+                    holeList.Add(hole.holePosition);
+                }
+            }
         }
 
         var chosenHole = GameManager.Instance.GetHoleFromHolePos(holeList[Random.Range(0, holeList.Count)]);
