@@ -94,7 +94,6 @@ public class GameManager : MonoBehaviour
 
     private void SpawnHammer()
     {
-        Debug.Log("what");
         HammerController hammer = Instantiate(hammerPrefabs[Random.Range(0, hammerPrefabs.Count)], hammerRestingPoints[hammerCount%hammerRestingPoints.Count]);
         hammersInGame.Add(hammer);
         hammer.bpm = StartingBPM;

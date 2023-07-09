@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 
 public class HammerController : MonoBehaviour
 {
-    private Vector3 _restingPos;
+    public Vector3 _restingPos;
     public GameObject shadow;
     public int bpm;
 
@@ -17,15 +18,10 @@ public class HammerController : MonoBehaviour
     private float ticker;
     private void Awake()
     {
+        shadow.transform.parent = null;
         _restingPos = transform.position;
     }
-    
 
-    private void StartChooseHoleCoroutine()
-    {
-        StartCoroutine(ChooseHole());
-    }
-    
     void Update()
     {
         ticker += Time.deltaTime;
@@ -33,14 +29,12 @@ public class HammerController : MonoBehaviour
         if (ticker >= 60f/bpm)
         {
             ticker -= 60f/bpm;// recalibrates every beat(maybe bad idea?)
-            StartChooseHoleCoroutine();
+            ChooseHole();
         }
     }
 
-    private IEnumerator ChooseHole()
+    private void ChooseHole()
     {
-        shadow.transform.localPosition = Vector3.zero;
-        shadow.transform.localScale = new Vector3(3, 3, 3);
         List<Vector2> holeList = new List<Vector2>();
 
         foreach (var hole in GameManager.Instance.holes)
@@ -68,27 +62,35 @@ public class HammerController : MonoBehaviour
         }
 
         var chosenHole = GameManager.Instance.GetHoleFromHolePos(holeList[Random.Range(0, holeList.Count)]);
-        var shadowStartPos = shadow.transform.position;
-        var shadowStartScale = shadow.transform.localScale;
+        
+        HammerGoDown(chosenHole);
+        
+       
+    }
 
-        float lerpT = 0;
-        while (true)
+    private void HammerGoDown(Hole hole)
+    {
+        shadow.transform.DOMove(hole.transform.position, 30f/bpm).SetEase(Ease.Linear).OnComplete(() =>
         {
-            lerpT += bpm/60f * Time.deltaTime;
-            shadow.transform.position = Vector3.Lerp(shadowStartPos, chosenHole.transform.position, lerpT);
-            shadow.transform.localScale = Vector3.Lerp(shadowStartScale, new Vector3(1, 1, 1), lerpT);
-            if (lerpT >= 1)
-            {
-                break;
-            }
-            yield return null;
-        }
+            transform.DOMoveX(hole.transform.position.x,  10f/bpm).SetEase(Ease.InQuad);
+            transform.DOMoveY(hole.transform.position.y, 10f/bpm).SetEase(Ease.OutQuad).OnComplete(() =>
+                CheckHit(hole)); 
+        });
+    }
+    
+    private void HammerGoUp()
+    {
+        shadow.transform.DOMove(_restingPos, 20f/bpm).SetEase(Ease.Linear);
+        transform.DOMove(_restingPos, 20f/bpm).SetEase(Ease.Linear);
+    }
 
-        if (chosenHole.occupationState == Hole.Occupation.Full)
+    private void CheckHit(Hole hole)
+    {
+        if (hole.occupationState == Hole.Occupation.Full)
         {
-            chosenHole.occupyingMole.Hit();
+            hole.occupyingMole.Hit();
         }
         
-        yield return null;
+        HammerGoUp();
     }
 }
