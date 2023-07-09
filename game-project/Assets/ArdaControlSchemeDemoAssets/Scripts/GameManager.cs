@@ -8,7 +8,7 @@ using DG.Tweening;
 public class GameManager : MonoBehaviour
 {
     public AudioClip gameMusic;
-    
+
     [Header("GamePlay Variables")] public int moleCount;
     //if we have time implement these
     //public int startingHoleCount;
@@ -90,13 +90,14 @@ public class GameManager : MonoBehaviour
         }
 
         molesInGame.Clear();
+        hasGameStarted = false;
         StartCoroutine("TakeAwayHoles");
     }
 
     void GameStart()
     {
         // GameStateManager.InvokeGameStartedEvent();
-        
+
         SoundManager.Instance.PlayLoopingSound(gameMusic);
 
         for (int i = 0; i < startingHammerCount; i++)
@@ -257,7 +258,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var hole in holes)
         {
-            if (hole.occupationState == Hole.Occupation.Free && Random.Range(0,5) == 2)
+            if (hole.occupationState == Hole.Occupation.Free && Random.Range(0, 5) == 2)
             {
                 hole.coin = Instantiate(coinPrefab, hole.transform);
                 hole.occupationState = Hole.Occupation.Coin;
@@ -271,7 +272,7 @@ public class GameManager : MonoBehaviour
         if (holePosDict.ContainsKey(hole.holePosition + new Vector2(-1, 0)))
         {
             holePosDict[hole.holePosition + new Vector2(-1, 0)]?.transform.DORestart();
-            holePosDict[hole.holePosition + new Vector2(-1, 0)]?.transform.DOShakePosition(0.3f,0.5f);
+            holePosDict[hole.holePosition + new Vector2(-1, 0)]?.transform.DOShakePosition(0.3f, 0.5f);
         }
 
         if (holePosDict.ContainsKey(hole.holePosition + new Vector2(-1, -1)))
@@ -290,12 +291,12 @@ public class GameManager : MonoBehaviour
         if (holePosDict.ContainsKey(hole.holePosition + new Vector2(1, -1)))
         {
             holePosDict[hole.holePosition + new Vector2(1, -1)]?.transform.DORestart();
-            holePosDict[hole.holePosition + new Vector2(1, -1)]?.transform.DOShakePosition(0.3f, 0.3f); 
+            holePosDict[hole.holePosition + new Vector2(1, -1)]?.transform.DOShakePosition(0.3f, 0.3f);
         }
         if (holePosDict.ContainsKey(hole.holePosition + new Vector2(1, 1)))
         {
             holePosDict[hole.holePosition + new Vector2(1, 1)]?.transform.DORestart();
-            holePosDict[hole.holePosition + new Vector2(1, 1)]?.transform.DOShakePosition(0.3f, 0.3f); 
+            holePosDict[hole.holePosition + new Vector2(1, 1)]?.transform.DOShakePosition(0.3f, 0.3f);
         }
 
         if (holePosDict.ContainsKey(hole.holePosition + new Vector2(0, 0)))

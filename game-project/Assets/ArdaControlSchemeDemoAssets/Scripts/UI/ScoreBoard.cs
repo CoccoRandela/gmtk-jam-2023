@@ -10,17 +10,16 @@ public class ScoreBoard : MonoBehaviour
 
     void Start()
     {
-        score = 0;
         StartCoroutine("CountTheSeconds");
         GameStateManager.GameEnded += OnGameEnded;
         GameStateManager.CoinCollected += OnCoinPickedUp;
+        GameStateManager.GameStarted += () => { scoreText.text = 0.ToString(); };
     }
 
     void OnGameEnded()
     {
         StopAllCoroutines();
         gameObject.SetActive(false);
-        score = 0;
     }
 
     IEnumerator CountTheSeconds()
