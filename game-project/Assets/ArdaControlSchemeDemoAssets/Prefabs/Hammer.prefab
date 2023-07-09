@@ -136,7 +136,7 @@ MonoBehaviour:
   shadow: {fileID: 8495781453001810405}
   bpm: 0
   playerWeight: 6
-  coinWeight: 0
+  coinWeight: 4
   ticker: 0
 --- !u!212 &4556677657579738726
 SpriteRenderer:

@@ -218,7 +218,7 @@ public class GameManager : MonoBehaviour
         if (coinTick >= coinTimer)
         {
             coinTick = 0;
-            //spawn coin on a free tile
+            SpawnCoin();
         }
 
         if (addHammerTick >= addHammerTimer)
@@ -250,6 +250,19 @@ public class GameManager : MonoBehaviour
             }
 
             GameStateManager.InvokeGameEndedEvent();
+        }
+    }
+
+    public void SpawnCoin()
+    {
+        foreach (var hole in holes)
+        {
+            if (hole.occupationState == Hole.Occupation.Free && Random.Range(0,5) == 2)
+            {
+                hole.coin = Instantiate(coinPrefab, hole.transform);
+                hole.occupationState = Hole.Occupation.Coin;
+                return;
+            }
         }
     }
 

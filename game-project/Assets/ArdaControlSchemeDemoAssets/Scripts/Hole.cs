@@ -8,6 +8,7 @@ public class Hole : MonoBehaviour
 {
     public Vector2 holePosition;
     public SpriteRenderer PickIndicator;
+    public GameObject coin;
 
     public enum Occupation
     {

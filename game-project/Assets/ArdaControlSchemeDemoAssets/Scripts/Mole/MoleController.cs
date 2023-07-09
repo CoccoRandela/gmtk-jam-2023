@@ -43,6 +43,15 @@ public class MoleController : MonoBehaviour
         }
 
         isMoving = true;
+        if (holeToMoveTo.occupationState == Hole.Occupation.Coin)
+        {
+            GameStateManager.InvokeCoinCollected();
+            if (holeToMoveTo.coin != null)
+            {
+                Debug.Log(holeToMoveTo.coin.transform.position);
+                Destroy(holeToMoveTo.coin);
+            }
+        }
         holeToMoveTo.occupationState = Hole.Occupation.Full;
         currentHole.occupationState = Hole.Occupation.Free;
         StartCoroutine(GoDown(holeToMoveTo.transform.position));
@@ -83,6 +92,8 @@ public class MoleController : MonoBehaviour
             transform.position += new Vector3(0, 3f * Time.deltaTime, 0);
             yield return null;
         }
+
+        
 
         Sleep();
         isMoving = false;

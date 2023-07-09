@@ -136,7 +136,7 @@ MonoBehaviour:
   shadow: {fileID: 8495781453001810405}
   bpm: 0
   playerWeight: 6
-  coinWeight: 0
+  coinWeight: 4
   ticker: 0
 --- !u!95 &-3013624140879806535
 Animator:

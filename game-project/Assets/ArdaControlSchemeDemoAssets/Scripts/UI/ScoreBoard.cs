@@ -6,12 +6,14 @@ public class ScoreBoard : MonoBehaviour
 {
     public TMPro.TMP_Text scoreText;
     private int score;
+    public AudioClip CoinSound;
 
     void Start()
     {
         score = 0;
         StartCoroutine("CountTheSeconds");
         GameStateManager.GameEnded += OnGameEnded;
+        GameStateManager.CoinCollected += OnCoinPickedUp;
     }
 
     void OnGameEnded()
@@ -29,6 +31,12 @@ public class ScoreBoard : MonoBehaviour
             score += 1;
             scoreText.text = score.ToString();
         }
+    }
 
+    void OnCoinPickedUp()
+    {
+        SoundManager.Instance.PlayEffect(CoinSound);
+        score += 20;
+        scoreText.text = score.ToString();
     }
 }
