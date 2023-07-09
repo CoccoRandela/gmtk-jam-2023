@@ -25,7 +25,7 @@ public class EndMenu : MonoBehaviour
 
     void Remove()
     {
-        transform.DOLocalMove(Vector3.zero, -1000).SetEase(Ease.OutBounce);
+        transform.DOLocalMove(new Vector3(0, -1000), 1).SetEase(Ease.OutBounce);
     }
 
     // Update is called once per frame
