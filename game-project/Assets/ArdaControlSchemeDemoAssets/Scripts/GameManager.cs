@@ -7,7 +7,21 @@ using UnityEngine.Serialization;
 
 public class GameManager : MonoBehaviour
 {
+    public class LevelData//Level needs moles, holes, hammers, coins, level speed(bpm)
+    {
+        public int HoleCount;
+        public int MoleCount;
+        public int HammerCount;
+        public int CoinCount;
+        public int LevelBPM;
+    }
+
+    [Header("Levels")] public LevelData[] LevelDatas;
+    public int CurrentLevel;
     [Header("GamePlay Variables")] public int moleCount;
+    
+    
+    [Header("Rest of the stuff")]
     
     public static GameManager Instance;
 
@@ -16,6 +30,8 @@ public class GameManager : MonoBehaviour
     private Dictionary<KeyCode,Hole> holeCodes = new Dictionary< KeyCode,Hole>();
     private Dictionary<Vector2,Hole> holePoss = new Dictionary< Vector2,Hole>();
 
+    public GameObject holePrefab;
+    
     public List<MoleController> molePrefabs = new List<MoleController>();
 
     public List<MoleController> molesInGame = new List<MoleController>();
@@ -30,11 +46,32 @@ public class GameManager : MonoBehaviour
         {
             Destroy(this); 
         }
-    } 
 
-    
-    void Start()
+        CurrentLevel = 0;
+    }
+
+    private void Start()
     {
+        LevelStart();
+    }
+
+    void LevelStart()//TODO: instantiate holes and moles looking up from a double array on each levelStart
+    {
+        CurrentLevel++;
+
+        if (CurrentLevel == LevelDatas.Length)
+        {
+            GameStateManager.Instance.InvokeGameEndedEvent();
+            return;
+        }
+
+        var holePosParent = GameObject.FindWithTag("HolePositions");
+        //holePosParent.chil
+        for (int i = 0; i < LevelDatas[i].HoleCount; i++)
+        {
+            //Instantiate(holePrefab)
+        }
+        
         foreach (var hole in holes)
         {
             holeCodes.Add(hole.keyCode, hole);
@@ -49,8 +86,11 @@ public class GameManager : MonoBehaviour
             holes[i].occupyingMole = molesInGame[i];
             molesInGame[i].currentHole = holes[i];
             holes[i].occupationState = Hole.Occupation.Full;
+            molesInGame[i].transform.parent = holes[i].transform;
         }
     }
+    
+    
     
 
     public void OnKeyUpEvent(KeyCode keyCode)
