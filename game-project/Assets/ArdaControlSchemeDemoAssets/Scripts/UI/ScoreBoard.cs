@@ -10,19 +10,32 @@ public class ScoreBoard : MonoBehaviour
 
     void Start()
     {
-        StartCoroutine("CountTheSeconds");
-        GameStateManager.GameEnded += OnGameEnded;
+        GameStateManager.MenuEnded += ResetScore;
+        GameStateManager.GameEnded += StopKeepingScore;
         GameStateManager.CoinCollected += OnCoinPickedUp;
-        GameStateManager.GameStarted += () => { scoreText.text = 0.ToString(); };
+        GameStateManager.GameMapInstantiated += KeepScore;
     }
 
-    void OnGameEnded()
+    void KeepScore()
+    {
+        score = 0;
+        scoreText.text = score.ToString();
+        StartCoroutine("IncreaseScore");
+    }
+
+    void StopKeepingScore()
     {
         StopAllCoroutines();
+    }
+
+    void ResetScore()
+    {
+        score = 0;
+        scoreText.text = score.ToString();
         gameObject.SetActive(false);
     }
 
-    IEnumerator CountTheSeconds()
+    IEnumerator IncreaseScore()
     {
         while (true)
         {

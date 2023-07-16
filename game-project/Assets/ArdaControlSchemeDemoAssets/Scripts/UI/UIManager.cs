@@ -13,6 +13,7 @@ public class UIManager : MonoBehaviour
     {
         GameStateManager.MenuStarted += ShowStartMenu;
         GameStateManager.GameStarted += RemoveStartMenu;
+        GameStateManager.GameEnded += PassScoreToEndMenu;
         GameStateManager.MenuEnded += ShowEndMenu;
     }
 
@@ -34,6 +35,11 @@ public class UIManager : MonoBehaviour
     public void ShowScoreBoard()
     {
         scoreBoard.SetActive(true);
+    }
+
+    public void PassScoreToEndMenu()
+    {
+        endMenu.scoreText.text = scoreBoard.GetComponent<ScoreBoard>().scoreText.text;
     }
 
 }

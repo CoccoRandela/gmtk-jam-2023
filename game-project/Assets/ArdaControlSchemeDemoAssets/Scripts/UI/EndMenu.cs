@@ -13,7 +13,6 @@ public class EndMenu : MonoBehaviour
     public async void GoUp()
     {
         await transform.DOLocalMove(Vector3.zero, 1).SetEase(Ease.OutBounce).AsyncWaitForCompletion();
-        scoreText.text = scoreBoard.scoreText.text;
     }
     // Start is called before the first frame update
 

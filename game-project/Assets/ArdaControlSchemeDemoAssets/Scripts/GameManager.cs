@@ -158,6 +158,7 @@ public class GameManager : MonoBehaviour
             hole.MoveTo(holeWorldPositions[i].transform.position);
             i++;
         }
+        GameStateManager.InvokeGameMapInstantiated();
     }
 
     private IEnumerator TakeAwayHoles()

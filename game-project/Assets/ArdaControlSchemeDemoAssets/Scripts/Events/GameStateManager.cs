@@ -41,11 +41,13 @@ public class GameStateManager : MonoBehaviour
    4) A coin gets placed on each run of the hammer in a location without moles
    */
 
+    public static event Action GameMapInstantiated;
+
 
     public static event Action GamePaused;
     public static event Action GameResumed;
 
-    
+
 
     public static event Action GameEnded;
     /*
@@ -64,6 +66,11 @@ public class GameStateManager : MonoBehaviour
         {
             Destroy(this);
         }
+    }
+
+    public static void InvokeGameMapInstantiated()
+    {
+        GameMapInstantiated?.Invoke();
     }
 
     public static void InvokeMenuStartedEvent()
