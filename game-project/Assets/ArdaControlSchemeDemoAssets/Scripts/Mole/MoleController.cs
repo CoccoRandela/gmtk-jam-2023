@@ -38,7 +38,7 @@ public class MoleController : MonoBehaviour
 
         if (holeToMoveTo.occupationState == Hole.Occupation.Full || holeToMoveTo.occupationState == Hole.Occupation.Unusable)
         {
-            Debug.Log("the " + holeToMoveTo + " is full");
+            // Debug.Log("the " + holeToMoveTo + " is full");
             return;
         }
 
@@ -48,7 +48,7 @@ public class MoleController : MonoBehaviour
             GameStateManager.InvokeCoinCollected();
             if (holeToMoveTo.coin != null)
             {
-                Debug.Log(holeToMoveTo.coin.transform.position);
+                // Debug.Log(holeToMoveTo.coin.transform.position);
                 Destroy(holeToMoveTo.coin);
             }
         }
@@ -93,7 +93,7 @@ public class MoleController : MonoBehaviour
             yield return null;
         }
 
-        
+
 
         Sleep();
         isMoving = false;

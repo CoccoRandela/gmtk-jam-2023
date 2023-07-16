@@ -23,7 +23,7 @@ public class InputManager : MonoBehaviour
         }
         else
         {
-            Destroy(this); 
+            Destroy(this);
         }
     }
 
@@ -38,25 +38,25 @@ public class InputManager : MonoBehaviour
             ClearLists();
             return;
         }
-        
+
         List<KeyCode> pressedInput = new List<KeyCode>();
 
         if (Input.anyKeyDown || Input.anyKey)
         {
-            foreach(KeyCode code in System.Enum.GetValues(typeof( KeyCode )) )
+            foreach (KeyCode code in System.Enum.GetValues(typeof(KeyCode)))
             {
                 if (Input.GetKey(code))
                 {
                     if (GameManager.Instance.usableKeys.Contains(code))
                     {
-                        m_activeInputs.Remove( code ); 
-                        m_activeInputs.Add( code ); 
-                        pressedInput.Add( code );
+                        m_activeInputs.Remove(code);
+                        m_activeInputs.Add(code);
+                        pressedInput.Add(code);
                         AddToKeyDowns(code);
                     }
                     else
                     {
-                        Debug.Log(code + " is not a usable key.");
+                        // Debug.Log(code + " is not a usable key.");
                     }
                 }
             }
@@ -64,13 +64,13 @@ public class InputManager : MonoBehaviour
 
         List<KeyCode> releasedInput = new List<KeyCode>();
 
-        foreach(KeyCode code in m_activeInputs)
+        foreach (KeyCode code in m_activeInputs)
         {
-            releasedInput.Add( code );
+            releasedInput.Add(code);
 
-            if(!pressedInput.Contains(code))
+            if (!pressedInput.Contains(code))
             {
-                releasedInput.Remove( code );
+                releasedInput.Remove(code);
                 AddToKeyUps(code);
             }
         }
@@ -80,7 +80,7 @@ public class InputManager : MonoBehaviour
 
     private void AddToKeyUps(KeyCode keyCode)
     {
-        
+
         if (keyUps.Count == 0 || !keyUps.Contains(keyCode))
         {
             keyUps.Add(keyCode);

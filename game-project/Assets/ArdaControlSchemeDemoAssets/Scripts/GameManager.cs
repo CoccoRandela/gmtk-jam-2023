@@ -72,6 +72,7 @@ public class GameManager : MonoBehaviour
 
     void OnGameEnded()
     {
+        Debug.Log("Game should end");
         hasGameEnded = true;
         foreach (HammerController hammer in hammersInGame)
         {
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
             hammerCount--;
         }
 
+        hammersInGame.Clear();
         holeCodes.Clear();
         usableKeys.Clear();
         holePosDict.Clear();
@@ -96,7 +98,7 @@ public class GameManager : MonoBehaviour
 
     void GameStart()
     {
-        // GameStateManager.InvokeGameStartedEvent();
+        hasGameEnded = false;
 
         SoundManager.Instance.PlayLoopingSound(gameMusic);
 

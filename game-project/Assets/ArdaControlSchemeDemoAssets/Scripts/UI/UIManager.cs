@@ -29,7 +29,6 @@ public class UIManager : MonoBehaviour
 
     void RemoveStartMenu()
     {
-        Debug.Log("Start Menu");
         startMenu.Remove(ShowScoreBoard);
     }
     public void ShowScoreBoard()
