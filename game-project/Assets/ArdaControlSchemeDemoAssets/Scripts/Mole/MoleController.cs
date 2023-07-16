@@ -18,6 +18,11 @@ public class MoleController : MonoBehaviour
 
     [FormerlySerializedAs("isDead")] public bool isStunned;
 
+    private void Awake()
+    {
+        GameStateManager.GameEnded += () => GameObject.Destroy(gameObject);
+    }
+
     private void Start()
     {
         animator.SetBool("isSleeping", true);
@@ -106,6 +111,7 @@ public class MoleController : MonoBehaviour
         currentHole.occupationState = Hole.Occupation.Unusable;
         currentHole.Unpicked();
         isStunned = true;
+        GameStateManager.InvokeMoleStunned();
     }
 
 

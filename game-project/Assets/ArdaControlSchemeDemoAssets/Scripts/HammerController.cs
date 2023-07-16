@@ -9,7 +9,7 @@ using DG.Tweening;
 public class HammerController : MonoBehaviour
 {
     public AudioClip Smash;
-    
+
     public Vector3 _restingPos;
     public GameObject shadow;
     public int bpm;
@@ -22,15 +22,22 @@ public class HammerController : MonoBehaviour
     {
         shadow.transform.parent = null;
         _restingPos = transform.position;
+        GameStateManager.GameEnded += DestroyHammer;
+    }
+
+    void DestroyHammer()
+    {
+        transform.DOKill();
+        GameObject.Destroy(gameObject);
     }
 
     void Update()
     {
         ticker += Time.deltaTime;
 
-        if (ticker >= 60f/bpm)
+        if (ticker >= 60f / bpm)
         {
-            ticker -= 60f/bpm;// recalibrates every beat(maybe bad idea?)
+            ticker -= 60f / bpm;// recalibrates every beat(maybe bad idea?)
             ChooseHole();
         }
     }
@@ -65,27 +72,27 @@ public class HammerController : MonoBehaviour
         }
 
         var chosenHole = GameManager.Instance.GetHoleFromHolePos(holeList[Random.Range(0, holeList.Count)]);
-        
+
         HammerGoDown(chosenHole);
-        
-       
+
+
     }
 
     private void HammerGoDown(Hole hole)
     {
         shadow.GetComponent<SpriteRenderer>().color = Color.white;
-        shadow.transform.DOMove(hole.transform.position, 30f/bpm).SetEase(Ease.Linear).OnComplete(() =>
+        shadow.transform.DOMove(hole.transform.position, 30f / bpm).SetEase(Ease.Linear).OnComplete(() =>
         {
-            transform.DOMoveX(hole.transform.position.x,  10f/bpm).SetEase(Ease.InQuad);
-            transform.DOMoveY(hole.transform.position.y, 10f/bpm).SetEase(Ease.OutQuad).OnComplete(() =>
-                CheckHit(hole)); 
+            transform.DOMoveX(hole.transform.position.x, 10f / bpm).SetEase(Ease.InQuad);
+            transform.DOMoveY(hole.transform.position.y, 10f / bpm).SetEase(Ease.OutQuad).OnComplete(() =>
+                CheckHit(hole));
         });
     }
-    
+
     private void HammerGoUp()
     {
-        shadow.transform.DOMove(_restingPos, 20f/bpm).SetEase(Ease.Linear);
-        transform.DOMove(_restingPos, 20f/bpm).SetEase(Ease.Linear);
+        shadow.transform.DOMove(_restingPos, 20f / bpm).SetEase(Ease.Linear);
+        transform.DOMove(_restingPos, 20f / bpm).SetEase(Ease.Linear);
     }
 
     private void CheckHit(Hole hole)

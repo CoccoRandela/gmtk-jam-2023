@@ -55,6 +55,7 @@ public class GameStateManager : MonoBehaviour
      */
 
     public static event Action CoinCollected;
+    public static event Action MoleStunned;
 
     private void Start()
     {
@@ -106,6 +107,11 @@ public class GameStateManager : MonoBehaviour
     public static void InvokeCoinCollected()
     {
         CoinCollected?.Invoke();
+    }
+
+    public static void InvokeMoleStunned()
+    {
+        MoleStunned.Invoke();
     }
 
 }

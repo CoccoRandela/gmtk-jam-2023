@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
 {
     public AudioClip gameMusic;
 
-    [Header("GamePlay Variables")] public int moleCount;
+    [Header("GamePlay Variables")]
+    public int moleCount;
     //if we have time implement these
     //public int startingHoleCount;
     //public bool shouldIncreaseHoles;
@@ -45,9 +46,6 @@ public class GameManager : MonoBehaviour
 
     public bool isMoving;//I know this is bad shut up its a game jam -Arda
 
-    public bool hasGameEnded;
-    public bool hasGameStarted;
-
     private int hammerCount;
     private void Awake()
     {
@@ -65,40 +63,38 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         GameStateManager.InvokeMenuStartedEvent();
-
+        GameStateManager.MoleStunned += checkForEndGame;
         GameStateManager.GameEnded += OnGameEnded;
         GameStateManager.GameStarted += GameStart;
     }
 
+    void checkForEndGame()
+    {
+        foreach (MoleController mole in molesInGame)
+        {
+            if (!mole.isStunned)
+            {
+                return;
+            }
+        }
+
+        GameStateManager.InvokeGameEndedEvent();
+    }
+
     void OnGameEnded()
     {
-        Debug.Log("Game should end");
-        hasGameEnded = true;
-        foreach (HammerController hammer in hammersInGame)
-        {
-            hammer.transform.DOKill();
-            GameObject.Destroy(hammer.gameObject);
-            hammerCount--;
-        }
 
         hammersInGame.Clear();
         holeCodes.Clear();
         usableKeys.Clear();
         holePosDict.Clear();
 
-        foreach (MoleController mole in molesInGame)
-        {
-            GameObject.Destroy(mole.gameObject);
-        }
-
         molesInGame.Clear();
-        hasGameStarted = false;
         StartCoroutine("TakeAwayHoles");
     }
 
     void GameStart()
     {
-        hasGameEnded = false;
 
         SoundManager.Instance.PlayLoopingSound(gameMusic);
 
@@ -126,7 +122,6 @@ public class GameManager : MonoBehaviour
             molesInGame[i].transform.parent = holes[i].transform;
         }
 
-        hasGameStarted = true;
     }
 
     private void SpawnHammer()
@@ -214,7 +209,6 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (hasGameEnded) return;
         coinTick += Time.deltaTime;
         addHammerTick += Time.deltaTime;
         BPMRampUpTick += Time.deltaTime;
@@ -241,19 +235,6 @@ public class GameManager : MonoBehaviour
         foreach (var mole in molesInGame)
         {
             if (mole.isMoving) isMoving = true;
-        }
-
-        if (hasGameStarted)
-        {
-            foreach (MoleController mole in molesInGame)
-            {
-                if (!mole.isStunned)
-                {
-                    return;
-                }
-            }
-
-            GameStateManager.InvokeGameEndedEvent();
         }
     }
 
